@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：17:02:34" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
+              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：17:10:41" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,7 +325,7 @@ class LambdaTest2 &#123;
     &#125;
 </code></pre>
 <blockquote>
-<p> <strong>invokedynamic</strong><br>    JVM字节码指令集一直比较稳定，一直到JAVA7中才增加了一个<code>invokedynamic</code>指令，这是JAVA为了实现<strong>动态类型语言</strong>支持而做的一种改进。但是在JAVA7中并没有提供直接生成<code>invokedynamic</code>指令的方法，需要借助==ASM==这种底层字节码工具来产生<code>invokedynamic</code>指令。直到JAVA8的Lambda表达式的出现，<code>invokedynamic</code>指令的生成，在java中才有了直接的生成方式。 </p>
+<p> <strong>invokedynamic</strong><br>    JVM字节码指令集一直比较稳定，一直到JAVA7中才增加了一个<code>invokedynamic</code>指令，这是JAVA为了实现<strong>动态类型语言</strong>支持而做的一种改进。但是在JAVA7中并没有提供直接生成<code>invokedynamic</code>指令的方法，需要借助<strong>ASM</strong>这种底层字节码工具来产生<code>invokedynamic</code>指令。直到JAVA8的Lambda表达式的出现，<code>invokedynamic</code>指令的生成，在java中才有了直接的生成方式。 </p>
 </blockquote>
 <p>invokedynamic指令所指定的bootstrap方法，编译器置入，java7中要自己提供一个这种静态方法，由asm工具写入字节码中，java8中jdk提供了这样的一个启动方法。JVM在类加载解析时，如果是invokedynamic时，每次都会进行重新解析，解析的时候，会首先执行bootstrap方法，LambdaMetafactory.metafactory方法的前三个参数，会在运行时根据访问类和运行期常量池动态传入，而后三个参数，则为bootstrap静态参数列表传入：</p>
 <ol>
@@ -381,8 +381,8 @@ class LambdaTest2 &#123;
 </code></pre>
 <p>完全是一样的，获取静态变量<code>System.out</code>，<code>&quot;hello lambda&quot;</code>入栈，然后调用<code>PrintStream.println</code>方法。<br>那么这个<code>lambda$main$0()</code>是在哪里被调用的？两种方式：</p>
 <ul>
-<li>==抛异常打印堆栈信息==</li>
-<li>==借鉴Class.forName的做法——通过Reflection的getCallerClass来获取到调用者的Class信息：==  </li>
+<li><strong>抛异常打印堆栈信息</strong></li>
+<li><strong>借鉴Class.forName的做法——通过Reflection的getCallerClass来获取到调用者的Class信息：</strong>  </li>
 </ul>
 <pre><code>public class LambdaTest &#123;
     public static void main(String[] args) throws Exception &#123;
@@ -468,8 +468,9 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
 <li>调用android.util.Log的静态方法d，把寄存器v0和v1的值传了进去（Log.d(“Application”, “hello, lambda”);）；</li>
 <li>创建java.lang.RuntimeException对象实例，并赋值到寄存器v0上；</li>
 <li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</li>
-<li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；<br>==<strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。==<br>查看onCreate()方法：</li>
+<li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；  </li>
 </ol>
+<p><strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。<br>查看onCreate()方法：</p>
 <pre><code>    method protected onCreate(Landroid/os/Bundle;)V
         .registers 3
         .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
@@ -495,8 +496,8 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
       
       
 </code></pre>
-<p>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量==r==，类型是java/lang/Runnable，初始值是寄存器==v0==的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
-<p> ==这里把原来的【创建对象实例】改成了【获取静态字段】。其实这只是一个优化，因为lambda函数体没有依赖CallerClass的变量或方法，完全可以作为一个静态变量存在，这样能避免反复创建对象==</p>
+<p>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量<strong>r</strong>，类型是java/lang/Runnable，初始值是寄存器**v0的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
+<p> <strong>这里把原来的【创建对象实例】改成了【获取静态字段】。其实这只是一个优化，因为lambda函数体没有依赖CallerClass的变量或方法，完全可以作为一个静态变量存在，这样能避免反复创建对象</strong></p>
 <p>查看这个实现类的字节码：</p>
 <pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
     .super Ljava/lang/Object;
@@ -652,7 +653,7 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
     &#125;
     
 </code></pre>
-<p>脱糖这一步是由D8编译器去做的，==desugarDebug(Release)FileDependencies==和==dexBuilderDebug(Release)==，前者是把项目依赖的所有jar包脱糖，后者是将项目自己的class脱糖。</p>
+<p>脱糖这一步是由D8编译器去做的，<strong>desugarDebug(Release)FileDependencies</strong>和**dexBuilderDebug(Release)**，前者是把项目依赖的所有jar包脱糖，后者是将项目自己的class脱糖。</p>
 <h3 id="D8脱糖"><a href="#D8脱糖" class="headerlink" title="D8脱糖"></a>D8脱糖</h3><p>使用Javac将Java8.java编译成.class</p>
 <pre><code>class Java8 &#123;
     interface Logger &#123;
@@ -674,7 +675,7 @@ Uncaught translation error: com.android.dx.cf.code.SimException:
 ERROR in Java8.main:([Ljava/lang/String;)V: 
 invalid opcode ba - invokedynamic requires --min-sdk-version &gt;= 26 (currently 13)
 </code></pre>
-<p>因为 lambda 的实现使用到了 Java 7 新增加的字节码 invokedynamic. 正如报错信息提示的那样，==Android 对这个字节码的支持是在 API 26(8.0) 以上才实现的==。因此android有一个名为desugaring的编译流程，它将lambda转换为所有API都兼容的形式。  </p>
+<p>因为 lambda 的实现使用到了 Java 7 新增加的字节码 invokedynamic. 正如报错信息提示的那样，<strong>Android 对这个字节码的支持是在 API 26(8.0) 以上才实现的</strong>。因此android有一个名为desugaring的编译流程，它将lambda转换为所有API都兼容的形式。  </p>
 <h4 id="desugaring的目标？"><a href="#desugaring的目标？" class="headerlink" title="desugaring的目标？"></a>desugaring的目标？</h4><p>让新的语法糖可以运行在所有设备上      </p>
 <h4 id="desugaring的历史"><a href="#desugaring的历史" class="headerlink" title="desugaring的历史"></a>desugaring的历史</h4><p>我们使用一款名为 Retrolambda 来实现相关的功能。它使用 JVM 的内建机制，在运行时而不是编译时将 lambda 转换为类的实现。生成新的类很容易增加方法数，但是如果权衡利弊这些成本还是可以接受的 (but work on the tool over time reduced the cost to something reasonable).</p>
 <p>随后 Android 的工具链团队发布了一款新的编译器，称其可以将 Java 8 的语法糖脱糖的同时还兼备更好的性能。这款编译器是基于 Eclipse 的 Java 编译器开发的，但是目标是 Dalvik 字节码而不是 Java 字节码。这个版本的 Java 8 的脱糖实现代价高昂，并且使用率低、性能差，与其他工具链不兼容。</p>
@@ -693,7 +694,7 @@ classes.dex
 </code></pre>
 <p>然后使用Android SDK 中提供的 dexdump 来查看classes.dex中的字节码:  <code>/Users/miracle/Library/Android/sdk/build-tools/28.0.3/dexdump -d classes.dex：</code>（分析流程同上）</p>
 <blockquote>
-<p><strong>SYNTHETIC</strong> 标志相关类和方法是被生成的<br>==lambda 代码块存在于原来的类的内部的原因在于，它可能需要访问该类的私有成员变量，而生成的类却是访问不到的。==  </p>
+<p><strong>SYNTHETIC</strong> 标志相关类和方法是被生成的<br><strong>lambda 代码块存在于原来的类的内部的原因在于，它可能需要访问该类的私有成员变量，而生成的类却是访问不到的。</strong>. </p>
 </blockquote>
 <h3 id="原生的Lambda"><a href="#原生的Lambda" class="headerlink" title="原生的Lambda"></a>原生的Lambda</h3><p>当配合 –min-api 26 参数编译的话，它会假定你将使用原生的lambda实现而不会进行脱糖：  </p>
 <pre><code>java -jar d8.jar --lib /Users/miracle/Library/Android/sdk/platforms/android-28/android.jar
