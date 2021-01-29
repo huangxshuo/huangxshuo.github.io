@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：16:53:19" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
+              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：17:02:34" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,40 +236,40 @@ class LambdaTest2 &#123;
 &#125;  
 </code></pre>
 <ul>
-<li><p>匿名内部类写法在编译后会而外生成<code>LambdaTest2$1.class</code>类：</p>
-<p>  {</p>
-<pre><code>lambda.LambdaTest2();
-  descriptor: ()V
-  flags:
-  Code:
-    stack=1, locals=1, args_size=1
-       0: aload_0
-       1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
-       4: return
-    LineNumberTable:
-      line 8: 0
+<li>匿名内部类写法在编译后会而外生成<code>LambdaTest2$1.class</code>类：</li>
+</ul>
+<pre><code>&#123;
+  lambda.LambdaTest2();
+    descriptor: ()V
+    flags:
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 8: 0
 
-public static void main(java.lang.String[]);
-  descriptor: ([Ljava/lang/String;)V
-  flags: ACC_PUBLIC, ACC_STATIC
-  Code:
-    stack=2, locals=2, args_size=1
-       0: new           #2                  // class lambda/LambdaTest2$1
-       3: dup
-       4: invokespecial #3                  // Method lambda/LambdaTest2$1.&quot;&lt;init&gt;&quot;:()V
-       7: astore_1
-       8: aload_1
-       9: invokeinterface #4,  1            // InterfaceMethod java/lang/Runnable.run:()V
-      14: return
-    LineNumberTable:
-      line 11: 0
-      line 17: 8
-      line 18: 14
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=2, args_size=1
+         0: new           #2                  // class lambda/LambdaTest2$1
+         3: dup
+         4: invokespecial #3                  // Method lambda/LambdaTest2$1.&quot;&lt;init&gt;&quot;:()V
+         7: astore_1
+         8: aload_1
+         9: invokeinterface #4,  1            // InterfaceMethod java/lang/Runnable.run:()V
+        14: return
+      LineNumberTable:
+        line 11: 0
+        line 17: 8
+        line 18: 14
+&#125;  
 </code></pre>
-<p>  }  </p>
-</li>
-<li><p>Lambda写法在编译后并没有生成额外的类： </p>
-</li>
+<ul>
+<li>Lambda写法在编译后并没有生成额外的类： </li>
 </ul>
 <pre><code>&#123;
   lambda.LambdaTest();
@@ -300,9 +300,149 @@ public static void main(java.lang.String[]);
 &#125;  
 </code></pre>
 <p>在<code>invokedynamic</code>执行完之后，存储栈顶值，入栈。然后调用接口<code>Runnable</code>的<code>run()</code>方法。<br>这里的<strong>InvokeDynamic #0</strong>后面的#0对应的并不是常量池里的索引，而是一个叫<code>BootstrapMethods</code>的:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line">    0: #20 invokestatic java&#x2F;lang&#x2F;invoke&#x2F;LambdaMetafactory.metafactory:(Ljava&#x2F;lang&#x2F;invoke&#x2F;MethodHandles$Lookup;Ljava&#x2F;lang&#x2F;String;Ljava&#x2F;lang&#x2F;invoke&#x2F;MethodType;Ljava&#x2F;lang&#x2F;invoke&#x2F;MethodType;Ljava&#x2F;lang&#x2F;invoke&#x2F;MethodHandle;Ljava&#x2F;lang&#x2F;invoke&#x2F;MethodType;)Ljava&#x2F;lang&#x2F;invoke&#x2F;CallSite;</span><br><span class="line">        Method arguments:</span><br><span class="line">          #21 ()V</span><br><span class="line">          #22 invokestatic lambda&#x2F;LambdaTest.lambda$main$0:()V</span><br><span class="line">          #21 ()V</span><br><span class="line">&#96;&#96;&#96;   </span><br><span class="line"></span><br><span class="line">也就是0:后面的内容，可以看出它是通过&#96;invokedynamic&#96;来调用&#96;LambdaMetafactory&#96;的&#96;metafactory&#96;方法。断点可知：  </span><br><span class="line"></span><br><span class="line">        public static CallSite metafactory(MethodHandles.Lookup caller,     &#x2F;&#x2F;caller: &quot;lambda.LambdaTest&quot;</span><br><span class="line">                                           String invokedName,      &#x2F;&#x2F;invokedName: &quot;run&quot;</span><br><span class="line">                                           MethodType invokedType,      &#x2F;&#x2F;invokedType: &quot;()Runnable&quot;      </span><br><span class="line">                                           MethodType samMethodType,    &#x2F;&#x2F;samMethodType: &quot;()void&quot;</span><br><span class="line">                                           MethodHandle implMethod,     &#x2F;&#x2F;implMethod: &quot;MethodHandle()void&quot;</span><br><span class="line">                                           MethodType instantiatedMethodType)   &#x2F;&#x2F;instantiatedMethodType: &quot;()void&quot;</span><br><span class="line">                throws LambdaConversionException &#123;</span><br><span class="line">            AbstractValidatingLambdaMetafactory mf;</span><br><span class="line">            mf &#x3D; new InnerClassLambdaMetafactory(caller, invokedType,</span><br><span class="line">                                                 invokedName, samMethodType,</span><br><span class="line">                                                 implMethod, instantiatedMethodType,</span><br><span class="line">                                                 false, EMPTY_CLASS_ARRAY, EMPTY_MT_ARRAY);</span><br><span class="line">            mf.validateMetafactoryArgs();</span><br><span class="line">            return mf.buildCallSite();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&gt;  **invokedynamic**  </span><br><span class="line">    JVM字节码指令集一直比较稳定，一直到JAVA7中才增加了一个&#96;invokedynamic&#96;指令，这是JAVA为了实现**动态类型语言**支持而做的一种改进。但是在JAVA7中并没有提供直接生成&#96;invokedynamic&#96;指令的方法，需要借助&#x3D;&#x3D;ASM&#x3D;&#x3D;这种底层字节码工具来产生&#96;invokedynamic&#96;指令。直到JAVA8的Lambda表达式的出现，&#96;invokedynamic&#96;指令的生成，在java中才有了直接的生成方式。 </span><br><span class="line">      </span><br><span class="line">invokedynamic指令所指定的bootstrap方法，编译器置入，java7中要自己提供一个这种静态方法，由asm工具写入字节码中，java8中jdk提供了这样的一个启动方法。JVM在类加载解析时，如果是invokedynamic时，每次都会进行重新解析，解析的时候，会首先执行bootstrap方法，LambdaMetafactory.metafactory方法的前三个参数，会在运行时根据访问类和运行期常量池动态传入，而后三个参数，则为bootstrap静态参数列表传入：</span><br><span class="line">1. 泛型擦除后的方法签名及返回值；  </span><br><span class="line">2. 对应的匿名方法；</span><br><span class="line">3. 泛型擦除之前的方法签名及返回值  </span><br><span class="line"></span><br><span class="line">2调用的方法：&#96;lambda$main$0:()&#96;，而&#96;LambdaTest&#96;中并没有这个方法，猜测是编译器帮我们生成的，通过javap -p命令：  </span><br><span class="line"></span><br><span class="line">    class lambda.LambdaTest &#123;</span><br><span class="line">      lambda.LambdaTest();</span><br><span class="line">      public static void main(java.lang.String[]);</span><br><span class="line">      private static void lambda$main$0();</span><br><span class="line">    &#125;  </span><br><span class="line">可以看到&#96;LambdaTest&#96;确实多了一个&#96;lambda$main$0:()&#96;方法。反射调用这个方法：</span><br><span class="line"></span><br><span class="line">    class LambdaTest &#123;</span><br><span class="line">        public static void main(String[] args) throws Exception&#123;</span><br><span class="line">            Runnable r &#x3D; () -&gt; &#123;</span><br><span class="line">                System.out.println(&quot;hello, lambda&quot;);</span><br><span class="line">            &#125;;</span><br><span class="line">            r.run();</span><br><span class="line">            LambdaTest.class.getDeclaredMethod(&quot;lambda$main$0&quot;).invoke(null);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&quot;hello lambda&quot;多打印了一次，查看其字节码： </span><br><span class="line"></span><br><span class="line">     private static synthetic lambda$main$0()V</span><br><span class="line">       L0</span><br><span class="line">        LINENUMBER 11 L0</span><br><span class="line">        GETSTATIC java&#x2F;lang&#x2F;System.out : Ljava&#x2F;io&#x2F;PrintStream;</span><br><span class="line">        LDC &quot;hello, lambda&quot;</span><br><span class="line">        INVOKEVIRTUAL java&#x2F;io&#x2F;PrintStream.println (Ljava&#x2F;lang&#x2F;String;)V</span><br><span class="line">       L1</span><br><span class="line">        LINENUMBER 12 L1</span><br><span class="line">        RETURN</span><br><span class="line">        MAXSTACK &#x3D; 2</span><br><span class="line">        MAXLOCALS &#x3D; 0  </span><br><span class="line"></span><br><span class="line">对比&#96;LambdaTest2&#96;run()方法的字节码：  </span><br><span class="line"></span><br><span class="line">      public run()V</span><br><span class="line">       L0</span><br><span class="line">        LINENUMBER 14 L0</span><br><span class="line">        GETSTATIC java&#x2F;lang&#x2F;System.out : Ljava&#x2F;io&#x2F;PrintStream;</span><br><span class="line">        LDC &quot;hello lambda&quot;</span><br><span class="line">        INVOKEVIRTUAL java&#x2F;io&#x2F;PrintStream.println (Ljava&#x2F;lang&#x2F;String;)V</span><br><span class="line">       L1</span><br><span class="line">        LINENUMBER 15 L1</span><br><span class="line">        RETURN</span><br><span class="line">       L2</span><br><span class="line">        LOCALVARIABLE this Llambda&#x2F;LambdaTest2$1; L0 L2 0</span><br><span class="line">        MAXSTACK &#x3D; 2</span><br><span class="line">        MAXLOCALS &#x3D; 1</span><br><span class="line"></span><br><span class="line">完全是一样的，获取静态变量&#96;System.out&#96;，&#96;&quot;hello lambda&quot;&#96;入栈，然后调用&#96;PrintStream.println&#96;方法。  </span><br><span class="line">那么这个&#96;lambda$main$0()&#96;是在哪里被调用的？两种方式：</span><br><span class="line">- &#x3D;&#x3D;抛异常打印堆栈信息&#x3D;&#x3D;</span><br><span class="line">- &#x3D;&#x3D;借鉴Class.forName的做法——通过Reflection的getCallerClass来获取到调用者的Class信息：&#x3D;&#x3D;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public class LambdaTest &#123;</span><br><span class="line">        public static void main(String[] args) throws Exception &#123;</span><br><span class="line">            Runnable r &#x3D; () -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    Method getCallerClass &#x3D; Class.forName(&quot;sun.reflect.Reflection&quot;).getDeclaredMethod(&quot;getCallerClass&quot;, int.class);</span><br><span class="line">                    int index &#x3D; 0;</span><br><span class="line">                    Class&lt;?&gt; callerClass;</span><br><span class="line">                    while ((callerClass &#x3D; (Class&lt;?&gt;) getCallerClass.invoke(null, index)) !&#x3D; null) &#123;</span><br><span class="line">                        System.out.println(callerClass);</span><br><span class="line">                        index++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            r.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line"> 运行后打印可知调用&#96;lambda$main$0()&#96;方法的是一个叫&#96;lambda.LambdaTest$$Lambda$1&#x2F;1531448569&#96;的类</span><br><span class="line">但我们在编译后并没有生成这个类，那可以推测它是JVM在运行时动态生成和加载的Runnable的实现类。打印Runnable实例的类名：</span><br><span class="line"></span><br><span class="line">    System.out.println(String.format(&quot;Runnable Class: %s&quot;, r.getClass().getSimpleName()));</span><br><span class="line"></span><br><span class="line">打印结果: </span><br><span class="line"></span><br><span class="line">    hello, lambda</span><br><span class="line">    class sun.reflect.Reflection</span><br><span class="line">    class lambda.LambdaTest</span><br><span class="line">    class lambda.LambdaTest$$Lambda$1&#x2F;1531448569</span><br><span class="line">    class lambda.LambdaTest</span><br><span class="line">    Runnable Class: LambdaTest$$Lambda$1&#x2F;1531448569</span><br><span class="line"></span><br><span class="line">- 结论：Lambda表达式在编译后，其函数体都会放到CallerClass里一个额外生成的方法内（所谓的&quot;匿名&quot;函数），由JVM动态生成的实现类去调用。最终它也是通过内部类的方式实现的，只不过不像直接使用内部类那样在编译后生成额外的类，它把生成实现类这一步放到了运行时，由JVM完成。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### Java中的Lambda与Android中的Lambda有什么不同？  </span><br><span class="line"></span><br><span class="line">    public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    </span><br><span class="line">        @Override</span><br><span class="line">        protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">            super.onCreate(savedInstanceState);</span><br><span class="line">            setContentView(R.layout.activity_main);</span><br><span class="line">            Runnable r &#x3D; () -&gt; &#123;</span><br><span class="line">                Log.d(&quot;MainActivity&quot;, &quot;hello lambda&quot;);</span><br><span class="line">            &#125;;</span><br><span class="line">            r.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">编译后打开dex：</span><br></pre></td></tr></table></figure>
-<p>MainActivity<br>    <linit>()<br>    void lambda$onCreate$0()<br>    void onCreate(android.os.Bundle)<br>    void setContentView(int)<br>-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA<br>    <clinit>()<br>    <init>()<br>    void run()<br>    com.hxs.androiddesugardemo.-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA INSTANCE<br>…</p>
-<p>```<br>发现此时这个类已经存在dex里面了，同时<code>MainActivity</code>也多了一个==lambda$onCreate$0==方法。查看这个方法的字节码：</p>
+<pre><code>0: #20 invokestatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #21 ()V
+      #22 invokestatic lambda/LambdaTest.lambda$main$0:()V
+      #21 ()V
+      
+</code></pre>
+<p>也就是0:后面的内容，可以看出它是通过<code>invokedynamic</code>来调用<code>LambdaMetafactory</code>的<code>metafactory</code>方法。断点可知：  </p>
+<pre><code>    public static CallSite metafactory(MethodHandles.Lookup caller,     //caller: &quot;lambda.LambdaTest&quot;
+                                       String invokedName,      //invokedName: &quot;run&quot;
+                                       MethodType invokedType,      //invokedType: &quot;()Runnable&quot;      
+                                       MethodType samMethodType,    //samMethodType: &quot;()void&quot;
+                                       MethodHandle implMethod,     //implMethod: &quot;MethodHandle()void&quot;
+                                       MethodType instantiatedMethodType)   //instantiatedMethodType: &quot;()void&quot;
+            throws LambdaConversionException &#123;
+        AbstractValidatingLambdaMetafactory mf;
+        mf = new InnerClassLambdaMetafactory(caller, invokedType,
+                                             invokedName, samMethodType,
+                                             implMethod, instantiatedMethodType,
+                                             false, EMPTY_CLASS_ARRAY, EMPTY_MT_ARRAY);
+        mf.validateMetafactoryArgs();
+        return mf.buildCallSite();
+    &#125;
+</code></pre>
+<blockquote>
+<p> <strong>invokedynamic</strong><br>    JVM字节码指令集一直比较稳定，一直到JAVA7中才增加了一个<code>invokedynamic</code>指令，这是JAVA为了实现<strong>动态类型语言</strong>支持而做的一种改进。但是在JAVA7中并没有提供直接生成<code>invokedynamic</code>指令的方法，需要借助==ASM==这种底层字节码工具来产生<code>invokedynamic</code>指令。直到JAVA8的Lambda表达式的出现，<code>invokedynamic</code>指令的生成，在java中才有了直接的生成方式。 </p>
+</blockquote>
+<p>invokedynamic指令所指定的bootstrap方法，编译器置入，java7中要自己提供一个这种静态方法，由asm工具写入字节码中，java8中jdk提供了这样的一个启动方法。JVM在类加载解析时，如果是invokedynamic时，每次都会进行重新解析，解析的时候，会首先执行bootstrap方法，LambdaMetafactory.metafactory方法的前三个参数，会在运行时根据访问类和运行期常量池动态传入，而后三个参数，则为bootstrap静态参数列表传入：</p>
+<ol>
+<li>泛型擦除后的方法签名及返回值；  </li>
+<li>对应的匿名方法；</li>
+<li>泛型擦除之前的方法签名及返回值  </li>
+</ol>
+<p>2调用的方法：<code>lambda$main$0:()</code>，而<code>LambdaTest</code>中并没有这个方法，猜测是编译器帮我们生成的，通过javap -p命令：  </p>
+<pre><code>class lambda.LambdaTest &#123;
+  lambda.LambdaTest();
+  public static void main(java.lang.String[]);
+  private static void lambda$main$0();
+&#125;  
+</code></pre>
+<p>可以看到<code>LambdaTest</code>确实多了一个<code>lambda$main$0:()</code>方法。反射调用这个方法：</p>
+<pre><code>class LambdaTest &#123;
+    public static void main(String[] args) throws Exception&#123;
+        Runnable r = () -&gt; &#123;
+            System.out.println(&quot;hello, lambda&quot;);
+        &#125;;
+        r.run();
+        LambdaTest.class.getDeclaredMethod(&quot;lambda$main$0&quot;).invoke(null);
+    &#125;
+&#125;  
+</code></pre>
+<p>“hello lambda”多打印了一次，查看其字节码： </p>
+<pre><code> private static synthetic lambda$main$0()V
+   L0
+    LINENUMBER 11 L0
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    LDC &quot;hello, lambda&quot;
+    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
+   L1
+    LINENUMBER 12 L1
+    RETURN
+    MAXSTACK = 2
+    MAXLOCALS = 0  
+</code></pre>
+<p>对比<code>LambdaTest2</code>run()方法的字节码：  </p>
+<pre><code>  public run()V
+   L0
+    LINENUMBER 14 L0
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    LDC &quot;hello lambda&quot;
+    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
+   L1
+    LINENUMBER 15 L1
+    RETURN
+   L2
+    LOCALVARIABLE this Llambda/LambdaTest2$1; L0 L2 0
+    MAXSTACK = 2
+    MAXLOCALS = 1
+</code></pre>
+<p>完全是一样的，获取静态变量<code>System.out</code>，<code>&quot;hello lambda&quot;</code>入栈，然后调用<code>PrintStream.println</code>方法。<br>那么这个<code>lambda$main$0()</code>是在哪里被调用的？两种方式：</p>
+<ul>
+<li>==抛异常打印堆栈信息==</li>
+<li>==借鉴Class.forName的做法——通过Reflection的getCallerClass来获取到调用者的Class信息：==  </li>
+</ul>
+<pre><code>public class LambdaTest &#123;
+    public static void main(String[] args) throws Exception &#123;
+        Runnable r = () -&gt; &#123;
+            try &#123;
+                Method getCallerClass = Class.forName(&quot;sun.reflect.Reflection&quot;).getDeclaredMethod(&quot;getCallerClass&quot;, int.class);
+                int index = 0;
+                Class&lt;?&gt; callerClass;
+                while ((callerClass = (Class&lt;?&gt;) getCallerClass.invoke(null, index)) != null) &#123;
+                    System.out.println(callerClass);
+                    index++;
+                &#125;
+            &#125; catch (Exception e) &#123;
+                e.printStackTrace();
+            &#125;
+        &#125;;
+        r.run();
+    &#125;
+&#125;  
+</code></pre>
+<p> 运行后打印可知调用<code>lambda$main$0()</code>方法的是一个叫<code>lambda.LambdaTest$$Lambda$1/1531448569</code>的类<br>但我们在编译后并没有生成这个类，那可以推测它是JVM在运行时动态生成和加载的Runnable的实现类。打印Runnable实例的类名：</p>
+<pre><code>System.out.println(String.format(&quot;Runnable Class: %s&quot;, r.getClass().getSimpleName()));
+</code></pre>
+<p>打印结果: </p>
+<pre><code>hello, lambda
+class sun.reflect.Reflection
+class lambda.LambdaTest
+class lambda.LambdaTest$$Lambda$1/1531448569
+class lambda.LambdaTest
+Runnable Class: LambdaTest$$Lambda$1/1531448569
+</code></pre>
+<ul>
+<li>结论：Lambda表达式在编译后，其函数体都会放到CallerClass里一个额外生成的方法内（所谓的”匿名”函数），由JVM动态生成的实现类去调用。最终它也是通过内部类的方式实现的，只不过不像直接使用内部类那样在编译后生成额外的类，它把生成实现类这一步放到了运行时，由JVM完成。</li>
+</ul>
+<h3 id="Java中的Lambda与Android中的Lambda有什么不同？"><a href="#Java中的Lambda与Android中的Lambda有什么不同？" class="headerlink" title="Java中的Lambda与Android中的Lambda有什么不同？"></a>Java中的Lambda与Android中的Lambda有什么不同？</h3><pre><code>public class MainActivity extends AppCompatActivity &#123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Runnable r = () -&gt; &#123;
+            Log.d(&quot;MainActivity&quot;, &quot;hello lambda&quot;);
+        &#125;;
+        r.run();
+    &#125;
+&#125;
+</code></pre>
+<p>编译后打开dex：</p>
+<pre><code>MainActivity
+    &lt;linit&gt;()
+    void lambda$onCreate$0()
+    void onCreate(android.os.Bundle)
+    void setContentView(int)
+-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA
+    &lt;clinit&gt;()
+    &lt;init&gt;()
+    void run()
+    com.hxs.androiddesugardemo.-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA INSTANCE 
+</code></pre>
+<p>发现此时这个类已经存在dex里面了，同时<code>MainActivity</code>也多了一个<strong>lambda$onCreate$0</strong>方法。查看这个方法的字节码：</p>
 <pre><code>.method static synthetic lambda$onCreate$0()V
     .registers 2
 
@@ -330,75 +470,77 @@ public static void main(java.lang.String[]);
 <li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</li>
 <li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；<br>==<strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。==<br>查看onCreate()方法：</li>
 </ol>
-<pre><code>method protected onCreate(Landroid/os/Bundle;)V
-    .registers 3
-    .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
-
-    .line 12
-    invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/AppCompatActivity;-&gt;onCreate(Landroid/os/Bundle;)V
-
-    .line 13
-    const v0, 0x7f0b001c
-
-    invoke-virtual &#123;p0, v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;setContentView(I)V
-
-    .line 14
-    sget-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-
-    .line 18
-    .local v0, &quot;r&quot;:Ljava/lang/Runnable;
-    invoke-interface &#123;v0&#125;, Ljava/lang/Runnable;-&gt;run()V
-
-    .line 19
-    return-void
-.end method
+<pre><code>    method protected onCreate(Landroid/os/Bundle;)V
+        .registers 3
+        .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
+    
+        .line 12
+        invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/AppCompatActivity;-&gt;onCreate(Landroid/os/Bundle;)V
+    
+        .line 13
+        const v0, 0x7f0b001c
+    
+        invoke-virtual &#123;p0, v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;setContentView(I)V
+    
+        .line 14
+        sget-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+    
+        .line 18
+        .local v0, &quot;r&quot;:Ljava/lang/Runnable;
+        invoke-interface &#123;v0&#125;, Ljava/lang/Runnable;-&gt;run()V
+    
+        .line 19
+        return-void
+    .end method
+      
+      
 </code></pre>
 <p>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量==r==，类型是java/lang/Runnable，初始值是寄存器==v0==的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
 <p> ==这里把原来的【创建对象实例】改成了【获取静态字段】。其实这只是一个优化，因为lambda函数体没有依赖CallerClass的变量或方法，完全可以作为一个静态变量存在，这样能避免反复创建对象==</p>
 <p>查看这个实现类的字节码：</p>
-<pre><code>.class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-.super Ljava/lang/Object;
-.source &quot;lambda&quot;
-
-# interfaces
-.implements Ljava/lang/Runnable;
-
-
-# static fields
-.field public static final synthetic INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-
-
-# direct methods
-.method static synthetic constructor &lt;clinit&gt;()V
-    .registers 1
-
-    new-instance v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-
-    invoke-direct &#123;v0&#125;, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;&lt;init&gt;()V
-
-    sput-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-
-    return-void
-.end method
-
-.method private synthetic constructor &lt;init&gt;()V
-    .registers 1
-
-    invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
-
-    return-void
-.end method
-
-# virtual methods
-.method public final run()V
-    .registers 1
-
-    invoke-static &#123;&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0()V
-
-    return-void
-.end method
+<pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+    .super Ljava/lang/Object;
+    .source &quot;lambda&quot;
+    
+    # interfaces
+    .implements Ljava/lang/Runnable;
+    
+    
+    # static fields
+    .field public static final synthetic INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+    
+    
+    # direct methods
+    .method static synthetic constructor &lt;clinit&gt;()V
+        .registers 1
+    
+        new-instance v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+    
+        invoke-direct &#123;v0&#125;, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;&lt;init&gt;()V
+    
+        sput-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+    
+        return-void
+    .end method
+    
+    .method private synthetic constructor &lt;init&gt;()V
+        .registers 1
+    
+        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
+    
+        return-void
+    .end method
+    
+    # virtual methods
+    .method public final run()V
+        .registers 1
+    
+        invoke-static &#123;&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0()V
+    
+        return-void
+    .end method
 </code></pre>
-<p>在类被加载的时候，就创建了他自己的对象实例并赋值给静态变量==INSTANCE==。实现的run()方法，里面也是直接调用MainActivity的==静态方法lambda$onCreate$0==。  </p>
+<p>在类被加载的时候，就创建了他自己的对象实例并赋值给静态变量<strong>INSTANCE</strong>。实现的run()方法，里面也是直接调用MainActivity的<strong>静态方法lambda$onCreate$0</strong>。  </p>
 <p><strong>如果Lambda表达式调用了CallerClass的变量呢？</strong><br>将代码稍微改造下：</p>
 <pre><code>public class MainActivity extends AppCompatActivity &#123;
 
@@ -415,7 +557,7 @@ public static void main(java.lang.String[]);
     &#125;
 &#125;
 </code></pre>
-<p>查看==onCreate()==方法的字节码：</p>
+<p>查看**onCreate()**方法的字节码：</p>
 <pre><code>.method protected onCreate(Landroid/os/Bundle;)V
     .registers 4
     .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
@@ -445,72 +587,73 @@ public static void main(java.lang.String[]);
     return-void
 .end method  
 </code></pre>
-<p>第15行，对比之前获取静态变量INSTANCE，==这里变成了new-instace构造这个实现类的实例==<br>查看该实现类的字节码： </p>
-<pre><code>.class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;
-.super Ljava/lang/Object;
-.source &quot;lambda&quot;
-
-# interfaces
-.implements Ljava/lang/Runnable;
-
-
-# instance fields
-.field public final synthetic f$0:Ljava/lang/String;
-
-
-# direct methods
-.method public synthetic constructor &lt;init&gt;(Ljava/lang/String;)V
-    .registers 2
-
-    invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
-
-    iput-object p1, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
-
-    return-void
-.end method
-
-
-# virtual methods
-.method public final run()V
-    .registers 2
-
-    iget-object v0, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
-
-    invoke-static &#123;v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0(Ljava/lang/String;)V
-
-    return-void
-.end method
+<p>第15行，对比之前获取静态变量INSTANCE，<strong>这里变成了new-instace构造这个实现类的实例</strong><br>查看该实现类的字节码： </p>
+<pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;
+    .super Ljava/lang/Object;
+    .source &quot;lambda&quot;
+    
+    # interfaces
+    .implements Ljava/lang/Runnable;
+    
+    
+    # instance fields
+    .field public final synthetic f$0:Ljava/lang/String;
+    
+    
+    # direct methods
+    .method public synthetic constructor &lt;init&gt;(Ljava/lang/String;)V
+        .registers 2
+    
+        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
+    
+        iput-object p1, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
+    
+        return-void
+    .end method
+    
+    
+    # virtual methods
+    .method public final run()V
+        .registers 2
+    
+        iget-object v0, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
+    
+        invoke-static &#123;v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0(Ljava/lang/String;)V
+    
+        return-void
+    .end method
 </code></pre>
 <p>已经没有加载时构建实例对象的代码了，不过实现的run()方法还是一致的。  </p>
 <h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p><strong>Andorid的Lambda在打包成dex时会直接生成对应的实现类，相比于java的<code>invokedynamic</code>这种方式，不同的只是==生成实现类的时机==，这跟直接使用匿名内部类的效基本没有区别。</strong>  </p>
 <p>其实在Lambda编译成class时，还是按照Java原本的方式（<code>invokedynamic</code>）处理的，查看class文件：</p>
-<pre><code>public class com.hxs.androiddesugardemo.MainActivity extends androidx.appcompat.app.AppCompatActivity &#123;
-  public com.hxs.androiddesugardemo.MainActivity();
-    Code:
-       0: aload_0
-       1: invokespecial #1                  // Method androidx/appcompat/app/AppCompatActivity.&quot;&lt;init&gt;&quot;:()V
-       4: return
-
-  protected void onCreate(android.os.Bundle);
-    Code:
-       0: aload_0
-       1: aload_1
-       2: invokespecial #2                  // Method androidx/appcompat/app/AppCompatActivity.onCreate:(Landroid/os/Bundle;)V
-       5: aload_0
-       6: ldc           #4                  // int 2131427356
-       8: invokevirtual #5                  // Method setContentView:(I)V
-      11: ldc           #6                  // String hello lambda
-      13: astore_2
-      14: aload_2
-      15: invokedynamic #7,  0              // InvokeDynamic #0:run:(Ljava/lang/String;)Ljava/lang/Runnable;
-      20: astore_3
-      21: aload_3
-      22: invokeinterface #8,  1            // InterfaceMethod java/lang/Runnable.run:()V
-      27: return
-&#125;
+<pre><code>    public class com.hxs.androiddesugardemo.MainActivity extends androidx.appcompat.app.AppCompatActivity &#123;
+      public com.hxs.androiddesugardemo.MainActivity();
+        Code:
+           0: aload_0
+           1: invokespecial #1                  // Method androidx/appcompat/app/AppCompatActivity.&quot;&lt;init&gt;&quot;:()V
+           4: return
+    
+      protected void onCreate(android.os.Bundle);
+        Code:
+           0: aload_0
+           1: aload_1
+           2: invokespecial #2                  // Method androidx/appcompat/app/AppCompatActivity.onCreate:(Landroid/os/Bundle;)V
+           5: aload_0
+           6: ldc           #4                  // int 2131427356
+           8: invokevirtual #5                  // Method setContentView:(I)V
+          11: ldc           #6                  // String hello lambda
+          13: astore_2
+          14: aload_2
+          15: invokedynamic #7,  0              // InvokeDynamic #0:run:(Ljava/lang/String;)Ljava/lang/Runnable;
+          20: astore_3
+          21: aload_3
+          22: invokeinterface #8,  1            // InterfaceMethod java/lang/Runnable.run:()V
+          27: return
+    &#125;
+    
 </code></pre>
 <p>脱糖这一步是由D8编译器去做的，==desugarDebug(Release)FileDependencies==和==dexBuilderDebug(Release)==，前者是把项目依赖的所有jar包脱糖，后者是将项目自己的class脱糖。</p>
-<h2 id="D8脱糖"><a href="#D8脱糖" class="headerlink" title="D8脱糖"></a>D8脱糖</h2><p>使用Javac将Java8.java编译成.class</p>
+<h3 id="D8脱糖"><a href="#D8脱糖" class="headerlink" title="D8脱糖"></a>D8脱糖</h3><p>使用Javac将Java8.java编译成.class</p>
 <pre><code>class Java8 &#123;
     interface Logger &#123;
         void log(String s);
