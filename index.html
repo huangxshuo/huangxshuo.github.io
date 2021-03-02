@@ -158,6 +158,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://huangxshuo.github.io/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="huangxiushuo">
+      <meta itemprop="description" content="上海">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">AndroidStudio插件开发（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-02 10:49:43 / 修改时间：10:56:56" itemprop="dateCreated datePublished" datetime="2021-03-02T10:49:43+08:00">2021-03-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在我们日常的开发中经常会使用到各种各样的AS插件，比如<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7369-android-butterknife-zelezny">Android ButterKnife Zelezny</a>，能方便我们快速生成ButterKnife相关代码，<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-">JSON To Kotlin Class</a>,可以通过一段json数据去生成data class，等等。这些插件极大地提高了我们的开发效率。然而之前一直都只是停留在使用阶段，最近基于公司项目的架构开发了一款快速生成模板代码的插件，在此记录并总结一下AS插件开发的一点经验。  </p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>官方推荐我们使用IDEA去开发插件，一般我们使用社区版的idea就好了，附上<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/#section=mac">下载链接</a>。然后一路安装就ok了。另外，社区版的idea源码也是公开的（jetbrains永远的神），有兴趣你甚至可以自己编译属于你自己版本的idea，附上<a target="_blank" rel="noopener" href="https://github.com/JetBrains/intellij-community">IDEA源码</a>。  </p>
+<h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><p>网上关于AS插件开发的教程不算太多，必要时候还得多翻翻<a target="_blank" rel="noopener" href="https://jetbrains.org/intellij/sdk/docs/basics/getting_started.html">官方开发文档</a>。不过u1s1，纯英文的文档看起来也确实费劲，我个人推荐多去看看开源插件的源码。废话少说，下面进入正题。  </p>
+<h3 id="创建plugin工程的方式"><a href="#创建plugin工程的方式" class="headerlink" title="创建plugin工程的方式"></a>创建plugin工程的方式</h3><h4 id="1-在IDEA中新建plugin项目："><a href="#1-在IDEA中新建plugin项目：" class="headerlink" title="1. 在IDEA中新建plugin项目："></a>1. 在IDEA中新建plugin项目：</h4><p><img src="/.io//screenshot1.jpg" alt="screenshot1"></p>
+<ul>
+<li>创建项目时选择IntelliJ Platform Plugin</li>
+<li>Project SDK需要选择插件开发特有的SDK(非JDK)  </li>
+</ul>
+<h4 id="2-使用Gradle来构建插件项目"><a href="#2-使用Gradle来构建插件项目" class="headerlink" title="2.使用Gradle来构建插件项目"></a>2.使用Gradle来构建插件项目</h4><p><img src="/.io//screenshot2.jpg" alt="screenshot2"><br>不同于第一种方式,这里使用的Project SDK就是指JDK。下面的依赖中Intellij Platform plugin这一项最好勾选，它会帮助我们添加相关的依赖和生成plugin.xml文件。其他选项可以根据自己的需求添加，我这里用到了Kotlin。然后点击next,项目就创建完成。  </p>
+<p>此时还需要在工程的build.gradle文件中添加相关依赖才能支持构建Intellij Plugin：  </p>
+<h5 id="1-使用intellij插件"><a href="#1-使用intellij插件" class="headerlink" title="1.使用intellij插件"></a>1.使用intellij插件</h5><pre><code>plugins &#123;
+    id &#39;java&#39;
+    id &#39;org.jetbrains.intellij&#39; version &#39;0.4.22&#39;
+    id &#39;org.jetbrains.kotlin.jvm&#39; version &#39;1.4.0&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>如果上一步勾选了Intellij Platform plugin，这一步忽略  </p>
+</blockquote>
+<h5 id="2-设置运行插件的IntelliJ的版本"><a href="#2-设置运行插件的IntelliJ的版本" class="headerlink" title="2.设置运行插件的IntelliJ的版本"></a>2.设置运行插件的IntelliJ的版本</h5><pre><code>intellij &#123;
+    version &#39;2019.3&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>可以理解为我们开发APP时设置的TargetSdkVersion  </p>
+</blockquote>
+<h5 id="3-添加对Android平台库的依赖"><a href="#3-添加对Android平台库的依赖" class="headerlink" title="3.添加对Android平台库的依赖"></a>3.添加对Android平台库的依赖</h5><pre><code>dependencies &#123;
+    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib&quot;
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
+
+    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile group: &#39;junit&#39;, name: &#39;junit&#39;, version: &#39;4.12&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>因为我们的插件在运行时是基于AS,所以这些依赖只需要参加编译即可  </p>
+</blockquote>
+<h5 id="4-指定你本地的AS安装路径"><a href="#4-指定你本地的AS安装路径" class="headerlink" title="4.指定你本地的AS安装路径"></a>4.指定你本地的AS安装路径</h5><p>也就是上一步指定的<code>$StudioCompilePath</code>这个变量，我们需要在工程的gradle.properties文件中去指定。我Mac环境的配置如下：<br><img src="/.io//screenshot4.jpg" alt="screenshot4">  </p>
+<h5 id="5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）"><a href="#5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）" class="headerlink" title="5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）"></a>5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）</h5><p><img src="/.io//screenshot3.jpg" alt="screenshot3">   </p>
+<blockquote>
+<p>这个plugin.xml的作用类似APP开发中的manifest.xml文件。我在之前开发过程中由于缺少对org.jetbrains.android的依赖，导致在解析Android项目时一直报相关的类找不到～_～||  </p>
+</blockquote>
+<p>附一份完整的build.gradle配置:<br><img src="/.io//screenshot5.jpg" alt="screenshot5">  </p>
+<h4 id="两种创建方式对比"><a href="#两种创建方式对比" class="headerlink" title="两种创建方式对比"></a>两种创建方式对比</h4><ul>
+<li>SDK的差异  <ul>
+<li>使用IDEA创建的插件项目中SDK为IDEA插件专用的SDK</li>
+<li>使用Gradle编译的插件项目SDK为JDK</li>
+</ul>
+</li>
+<li>IDEA.iml文件中type不同<ul>
+<li>使用IDEA创建的插件项目中xxx.iml中type为PLUGIN_MODULE</li>
+<li>使用Gradle编译的插件项目中xxx.iml中type为JAVA_MODULE</li>
+</ul>
+</li>
+</ul>
+<p>官方文档上的总结是IDEA创建的插件适用于功能比较简单的插件，对于功能比较复杂的插件建议使用Gradle  </p>
+<h3 id="关于plugin-xml"><a href="#关于plugin-xml" class="headerlink" title="关于plugin.xml"></a>关于plugin.xml</h3><p>IDEA插件的工程创建完毕后，都会在META目录下创建一个plugin.xml文件，可以将它理解为AndroidMainFest.xml，里面定义了一些组件、事件等需要注册的内容。<br>几个属性：  </p>
+<ul>
+<li>id：表示当前插件的唯一id号</li>
+<li>name：插件的名称</li>
+<li>version：插件的版本号</li>
+<li>vendor：填写开发人的邮箱，公司名称</li>
+<li>description：插件的描述，如果将插件上传到IDEA的仓库后，在进行下载的时候就会显示该描述</li>
+<li>idea-version：表示当前插件所支持的所有Intellij Idea 的版本, 详细信息可以参照这个对应关系</li>
+<li>extensions：这里一般会放一些我们自己的扩展的东西，比如新增高亮显示，新增语言支持都是需要在这里进行扩展</li>
+<li>actions：新增的Action类需要在这里注册，用于菜单栏扩展  </li>
+</ul>
+<h3 id="创建第一个Action"><a href="#创建第一个Action" class="headerlink" title="创建第一个Action"></a>创建第一个Action</h3><h4 id="AnAction"><a href="#AnAction" class="headerlink" title="AnAction"></a>AnAction</h4><p>至此一个intellij plugin的项目就已经创建好了，接下来正式开始激动人心的插件开发。首先需要先介绍一个非常重要的类：AnAction。根据官方文档的说法， AnAction表示具有状态、表示和可执行的实体。这样说太抽象，结合使用场景来说，当我们想扩展IDEA提供的菜单栏，那么就可以通过创建Action类来实现相应的功能。  </p>
+<h4 id="创建AnAction"><a href="#创建AnAction" class="headerlink" title="创建AnAction"></a>创建AnAction</h4><p>创建一个Action有两种方式：  </p>
+<h5 id="1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置"><a href="#1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置" class="headerlink" title="1.新建一个类去继承AnAction,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置"></a>1.新建一个类去继承<code>AnAction</code>,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置</h5><h5 id="2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法："><a href="#2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法：" class="headerlink" title="2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法："></a>2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法：</h5><p><img src="/.io//screenshot6.jpg" alt="screenshot6">    </p>
+<p> 区别就是使用第二种方式创建时需要填写相关的配置信息，如id、name、快捷键等等：<br> <img src="/.io//screenshot7.jpg" alt="screenshot7">    </p>
+<p> 具体的Action配置的关键信息：</p>
+<ul>
+<li>group id：多个Action的组合，id需要唯一</li>
+<li>group text：工具栏中group显示的信息</li>
+<li>group icon：group图标</li>
+<li>group popup：action是否为弹出</li>
+<li>action id：action ID，需要唯一</li>
+<li>action class：具体的Action实现类的全限定名</li>
+<li>action text：当前action在工具栏中的展示信息</li>
+<li>add-to-group：group-id决定着当前group或者action显示在工具栏的具体地方，anchor决定着该action或者group显示在该工具栏的具体地方。  </li>
+</ul>
+<p>这里就随便填填，然后点击ok，这样一个Action就创建好了，查看plugin.xml文件，找到我们刚刚创建好的<code>HelloAction</code>:  </p>
+<p><img src="/.io//screenshot8.jpg" alt="screenshot8">  </p>
+<p>然后去实现<code>HelloAction</code>的<code>actionPerformed</code>方法，当我们点击这个Action时<code>actionPerformed</code>方法就会被执行。这里我们简单的去实现一下这个方法，点击后会弹出一个弹窗： </p>
+<p><img src="/.io//screenshot9.jpg" alt="screenshot9">    </p>
+<p>然后点击运行：<br><img src="/.io//screenshot10.jpg" alt="screenshot10">  </p>
+<p>就会启动一个新的IntelliJIDEA的界面，在这个IDEA顶部的view菜单中，可以找到我们定义的<code>HelloPlugin</code>:<br><img src="/.io//screenshot11.jpg" alt="screenshot11">    </p>
+<p>点击<code>HelloPlugin</code>：<br><img src="/.io//screenshot12.jpg" alt="screenshot12">   </p>
+<p>这样一个最简单的Intellij plugin就实现了，在下一篇文章中会实现一些更复杂的功能，包括如何解析一个Android项目，如何生成类文件，资源文件等等。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://huangxshuo.github.io/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -467,7 +619,7 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
 <li>把字符串常量 “hello, lambda” 赋值给寄存器v1；</li>
 <li>调用android.util.Log的静态方法d，把寄存器v0和v1的值传了进去（Log.d(“Application”, “hello, lambda”);）；</li>
 <li>创建java.lang.RuntimeException对象实例，并赋值到寄存器v0上；</li>
-<li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</li>
+<li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</init></li>
 <li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；  </li>
 </ol>
 <p><strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。<br>查看onCreate()方法：</p>
@@ -716,7 +868,7 @@ classes.dex
 |0005: return-void
 </code></pre>
 <p>与之前调用生成的Java8.lambda$main$0类中包含System.out.print()方法不同，log的实现直接调用了System.out.print()  </p>
-<p>生成的 lambda 类不再是静态单例。字节序 0000 直接读取了 PrintStream 的实例引用，该引用即是 System.out, 它在 main 方法中被调用，并且被传递给相应的构造器（名为 <init> 的字节码）  </p>
+<p>生成的 lambda 类不再是静态单例。字节序 0000 直接读取了 PrintStream 的实例引用，该引用即是 System.out, 它在 main 方法中被调用，并且被传递给相应的构造器（名为 <init> 的字节码）  </init></p>
 <p> 将其进行源码级别的转换：</p>
 <pre><code>public static void main(String... args) &#123;
 -    sayHi(System.out::println);
@@ -823,7 +975,7 @@ classes.dex
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -836,7 +988,7 @@ classes.dex
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

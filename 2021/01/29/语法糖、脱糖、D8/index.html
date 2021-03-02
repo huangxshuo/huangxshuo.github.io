@@ -472,7 +472,7 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
 <li>把字符串常量 “hello, lambda” 赋值给寄存器v1；</li>
 <li>调用android.util.Log的静态方法d，把寄存器v0和v1的值传了进去（Log.d(“Application”, “hello, lambda”);）；</li>
 <li>创建java.lang.RuntimeException对象实例，并赋值到寄存器v0上；</li>
-<li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</li>
+<li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</init></li>
 <li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；  </li>
 </ol>
 <p><strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。<br>查看onCreate()方法：</p>
@@ -721,7 +721,7 @@ classes.dex
 |0005: return-void
 </code></pre>
 <p>与之前调用生成的Java8.lambda$main$0类中包含System.out.print()方法不同，log的实现直接调用了System.out.print()  </p>
-<p>生成的 lambda 类不再是静态单例。字节序 0000 直接读取了 PrintStream 的实例引用，该引用即是 System.out, 它在 main 方法中被调用，并且被传递给相应的构造器（名为 <init> 的字节码）  </p>
+<p>生成的 lambda 类不再是静态单例。字节序 0000 直接读取了 PrintStream 的实例引用，该引用即是 System.out, 它在 main 方法中被调用，并且被传递给相应的构造器（名为 <init> 的字节码）  </init></p>
 <p> 将其进行源码级别的转换：</p>
 <pre><code>public static void main(String... args) &#123;
 -    sayHi(System.out::println);
@@ -763,6 +763,13 @@ classes.dex
 
 
         
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="AndroidStudio插件开发（一）">
+      AndroidStudio插件开发（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -836,7 +843,7 @@ classes.dex
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -849,7 +856,7 @@ classes.dex
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

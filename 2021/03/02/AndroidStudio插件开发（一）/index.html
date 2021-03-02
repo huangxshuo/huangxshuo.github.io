@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"huangxshuo.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在我们日常的开发中经常会使用到各种各样的AS插件，比如Android ButterKnife Zelezny，能方便我们快速生成ButterKnife相关代码，JSON To Kotlin Class,可以通过一段json数据去生成data class，等等。这些插件极大地提高了我们的开发效率。然而之前一直都只是停留在使用阶段，最近基于公司项目的架构开发了一款快速生成模板代码的插件，在此记录并">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AndroidStudio插件开发（一）">
+<meta property="og:url" content="https://huangxshuo.github.io/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="前言在我们日常的开发中经常会使用到各种各样的AS插件，比如Android ButterKnife Zelezny，能方便我们快速生成ButterKnife相关代码，JSON To Kotlin Class,可以通过一段json数据去生成data class，等等。这些插件极大地提高了我们的开发效率。然而之前一直都只是停留在使用阶段，最近基于公司项目的架构开发了一款快速生成模板代码的插件，在此记录并">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot1.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot2.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot4.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot3.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot5.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot6.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot7.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot8.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot9.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot10.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot11.jpg">
+<meta property="og:image" content="https://huangxshuo.github.io/.io//screenshot12.jpg">
+<meta property="article:published_time" content="2021-03-02T02:49:43.000Z">
+<meta property="article:modified_time" content="2021-03-02T02:56:56.901Z">
+<meta property="article:author" content="huangxiushuo">
+<meta property="article:tag" content="AS插件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://huangxshuo.github.io/.io//screenshot1.jpg">
+
+<link rel="canonical" href="https://huangxshuo.github.io/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>AndroidStudio插件开发（一） | </title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title"></h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">道阻且长，行则将至</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://huangxshuo.github.io/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="huangxiushuo">
+      <meta itemprop="description" content="上海">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AndroidStudio插件开发（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-02 10:49:43 / 修改时间：10:56:56" itemprop="dateCreated datePublished" datetime="2021-03-02T10:49:43+08:00">2021-03-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在我们日常的开发中经常会使用到各种各样的AS插件，比如<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7369-android-butterknife-zelezny">Android ButterKnife Zelezny</a>，能方便我们快速生成ButterKnife相关代码，<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-">JSON To Kotlin Class</a>,可以通过一段json数据去生成data class，等等。这些插件极大地提高了我们的开发效率。然而之前一直都只是停留在使用阶段，最近基于公司项目的架构开发了一款快速生成模板代码的插件，在此记录并总结一下AS插件开发的一点经验。  </p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>官方推荐我们使用IDEA去开发插件，一般我们使用社区版的idea就好了，附上<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/#section=mac">下载链接</a>。然后一路安装就ok了。另外，社区版的idea源码也是公开的（jetbrains永远的神），有兴趣你甚至可以自己编译属于你自己版本的idea，附上<a target="_blank" rel="noopener" href="https://github.com/JetBrains/intellij-community">IDEA源码</a>。  </p>
+<h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><p>网上关于AS插件开发的教程不算太多，必要时候还得多翻翻<a target="_blank" rel="noopener" href="https://jetbrains.org/intellij/sdk/docs/basics/getting_started.html">官方开发文档</a>。不过u1s1，纯英文的文档看起来也确实费劲，我个人推荐多去看看开源插件的源码。废话少说，下面进入正题。  </p>
+<h3 id="创建plugin工程的方式"><a href="#创建plugin工程的方式" class="headerlink" title="创建plugin工程的方式"></a>创建plugin工程的方式</h3><h4 id="1-在IDEA中新建plugin项目："><a href="#1-在IDEA中新建plugin项目：" class="headerlink" title="1. 在IDEA中新建plugin项目："></a>1. 在IDEA中新建plugin项目：</h4><p><img src="/.io//screenshot1.jpg" alt="screenshot1"></p>
+<ul>
+<li>创建项目时选择IntelliJ Platform Plugin</li>
+<li>Project SDK需要选择插件开发特有的SDK(非JDK)  </li>
+</ul>
+<h4 id="2-使用Gradle来构建插件项目"><a href="#2-使用Gradle来构建插件项目" class="headerlink" title="2.使用Gradle来构建插件项目"></a>2.使用Gradle来构建插件项目</h4><p><img src="/.io//screenshot2.jpg" alt="screenshot2"><br>不同于第一种方式,这里使用的Project SDK就是指JDK。下面的依赖中Intellij Platform plugin这一项最好勾选，它会帮助我们添加相关的依赖和生成plugin.xml文件。其他选项可以根据自己的需求添加，我这里用到了Kotlin。然后点击next,项目就创建完成。  </p>
+<p>此时还需要在工程的build.gradle文件中添加相关依赖才能支持构建Intellij Plugin：  </p>
+<h5 id="1-使用intellij插件"><a href="#1-使用intellij插件" class="headerlink" title="1.使用intellij插件"></a>1.使用intellij插件</h5><pre><code>plugins &#123;
+    id &#39;java&#39;
+    id &#39;org.jetbrains.intellij&#39; version &#39;0.4.22&#39;
+    id &#39;org.jetbrains.kotlin.jvm&#39; version &#39;1.4.0&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>如果上一步勾选了Intellij Platform plugin，这一步忽略  </p>
+</blockquote>
+<h5 id="2-设置运行插件的IntelliJ的版本"><a href="#2-设置运行插件的IntelliJ的版本" class="headerlink" title="2.设置运行插件的IntelliJ的版本"></a>2.设置运行插件的IntelliJ的版本</h5><pre><code>intellij &#123;
+    version &#39;2019.3&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>可以理解为我们开发APP时设置的TargetSdkVersion  </p>
+</blockquote>
+<h5 id="3-添加对Android平台库的依赖"><a href="#3-添加对Android平台库的依赖" class="headerlink" title="3.添加对Android平台库的依赖"></a>3.添加对Android平台库的依赖</h5><pre><code>dependencies &#123;
+    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib&quot;
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
+    compileOnly fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
+
+    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
+    testCompile group: &#39;junit&#39;, name: &#39;junit&#39;, version: &#39;4.12&#39;
+&#125;
+</code></pre>
+<blockquote>
+<p>因为我们的插件在运行时是基于AS,所以这些依赖只需要参加编译即可  </p>
+</blockquote>
+<h5 id="4-指定你本地的AS安装路径"><a href="#4-指定你本地的AS安装路径" class="headerlink" title="4.指定你本地的AS安装路径"></a>4.指定你本地的AS安装路径</h5><p>也就是上一步指定的<code>$StudioCompilePath</code>这个变量，我们需要在工程的gradle.properties文件中去指定。我Mac环境的配置如下：<br><img src="/.io//screenshot4.jpg" alt="screenshot4">  </p>
+<h5 id="5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）"><a href="#5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）" class="headerlink" title="5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）"></a>5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）</h5><p><img src="/.io//screenshot3.jpg" alt="screenshot3">   </p>
+<blockquote>
+<p>这个plugin.xml的作用类似APP开发中的manifest.xml文件。我在之前开发过程中由于缺少对org.jetbrains.android的依赖，导致在解析Android项目时一直报相关的类找不到～_～||  </p>
+</blockquote>
+<p>附一份完整的build.gradle配置:<br><img src="/.io//screenshot5.jpg" alt="screenshot5">  </p>
+<h4 id="两种创建方式对比"><a href="#两种创建方式对比" class="headerlink" title="两种创建方式对比"></a>两种创建方式对比</h4><ul>
+<li>SDK的差异  <ul>
+<li>使用IDEA创建的插件项目中SDK为IDEA插件专用的SDK</li>
+<li>使用Gradle编译的插件项目SDK为JDK</li>
+</ul>
+</li>
+<li>IDEA.iml文件中type不同<ul>
+<li>使用IDEA创建的插件项目中xxx.iml中type为PLUGIN_MODULE</li>
+<li>使用Gradle编译的插件项目中xxx.iml中type为JAVA_MODULE</li>
+</ul>
+</li>
+</ul>
+<p>官方文档上的总结是IDEA创建的插件适用于功能比较简单的插件，对于功能比较复杂的插件建议使用Gradle  </p>
+<h3 id="关于plugin-xml"><a href="#关于plugin-xml" class="headerlink" title="关于plugin.xml"></a>关于plugin.xml</h3><p>IDEA插件的工程创建完毕后，都会在META目录下创建一个plugin.xml文件，可以将它理解为AndroidMainFest.xml，里面定义了一些组件、事件等需要注册的内容。<br>几个属性：  </p>
+<ul>
+<li>id：表示当前插件的唯一id号</li>
+<li>name：插件的名称</li>
+<li>version：插件的版本号</li>
+<li>vendor：填写开发人的邮箱，公司名称</li>
+<li>description：插件的描述，如果将插件上传到IDEA的仓库后，在进行下载的时候就会显示该描述</li>
+<li>idea-version：表示当前插件所支持的所有Intellij Idea 的版本, 详细信息可以参照这个对应关系</li>
+<li>extensions：这里一般会放一些我们自己的扩展的东西，比如新增高亮显示，新增语言支持都是需要在这里进行扩展</li>
+<li>actions：新增的Action类需要在这里注册，用于菜单栏扩展  </li>
+</ul>
+<h3 id="创建第一个Action"><a href="#创建第一个Action" class="headerlink" title="创建第一个Action"></a>创建第一个Action</h3><h4 id="AnAction"><a href="#AnAction" class="headerlink" title="AnAction"></a>AnAction</h4><p>至此一个intellij plugin的项目就已经创建好了，接下来正式开始激动人心的插件开发。首先需要先介绍一个非常重要的类：AnAction。根据官方文档的说法， AnAction表示具有状态、表示和可执行的实体。这样说太抽象，结合使用场景来说，当我们想扩展IDEA提供的菜单栏，那么就可以通过创建Action类来实现相应的功能。  </p>
+<h4 id="创建AnAction"><a href="#创建AnAction" class="headerlink" title="创建AnAction"></a>创建AnAction</h4><p>创建一个Action有两种方式：  </p>
+<h5 id="1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置"><a href="#1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置" class="headerlink" title="1.新建一个类去继承AnAction,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置"></a>1.新建一个类去继承<code>AnAction</code>,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置</h5><h5 id="2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法："><a href="#2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法：" class="headerlink" title="2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法："></a>2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法：</h5><p><img src="/.io//screenshot6.jpg" alt="screenshot6">    </p>
+<p> 区别就是使用第二种方式创建时需要填写相关的配置信息，如id、name、快捷键等等：<br> <img src="/.io//screenshot7.jpg" alt="screenshot7">    </p>
+<p> 具体的Action配置的关键信息：</p>
+<ul>
+<li>group id：多个Action的组合，id需要唯一</li>
+<li>group text：工具栏中group显示的信息</li>
+<li>group icon：group图标</li>
+<li>group popup：action是否为弹出</li>
+<li>action id：action ID，需要唯一</li>
+<li>action class：具体的Action实现类的全限定名</li>
+<li>action text：当前action在工具栏中的展示信息</li>
+<li>add-to-group：group-id决定着当前group或者action显示在工具栏的具体地方，anchor决定着该action或者group显示在该工具栏的具体地方。  </li>
+</ul>
+<p>这里就随便填填，然后点击ok，这样一个Action就创建好了，查看plugin.xml文件，找到我们刚刚创建好的<code>HelloAction</code>:  </p>
+<p><img src="/.io//screenshot8.jpg" alt="screenshot8">  </p>
+<p>然后去实现<code>HelloAction</code>的<code>actionPerformed</code>方法，当我们点击这个Action时<code>actionPerformed</code>方法就会被执行。这里我们简单的去实现一下这个方法，点击后会弹出一个弹窗： </p>
+<p><img src="/.io//screenshot9.jpg" alt="screenshot9">    </p>
+<p>然后点击运行：<br><img src="/.io//screenshot10.jpg" alt="screenshot10">  </p>
+<p>就会启动一个新的IntelliJIDEA的界面，在这个IDEA顶部的view菜单中，可以找到我们定义的<code>HelloPlugin</code>:<br><img src="/.io//screenshot11.jpg" alt="screenshot11">    </p>
+<p>点击<code>HelloPlugin</code>：<br><img src="/.io//screenshot12.jpg" alt="screenshot12">   </p>
+<p>这样一个最简单的Intellij plugin就实现了，在下一篇文章中会实现一些更复杂的功能，包括如何解析一个Android项目，如何生成类文件，资源文件等等。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AS%E6%8F%92%E4%BB%B6/" rel="tag"># AS插件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/" rel="prev" title="语法糖、脱糖、D8">
+      <i class="fa fa-chevron-left"></i> 语法糖、脱糖、D8
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="nav-number">3.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAplugin%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">创建plugin工程的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9C%A8IDEA%E4%B8%AD%E6%96%B0%E5%BB%BAplugin%E9%A1%B9%E7%9B%AE%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">1. 在IDEA中新建plugin项目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8Gradle%E6%9D%A5%E6%9E%84%E5%BB%BA%E6%8F%92%E4%BB%B6%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.2.</span> <span class="nav-text">2.使用Gradle来构建插件项目</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8intellij%E6%8F%92%E4%BB%B6"><span class="nav-number">4.2.1.</span> <span class="nav-text">1.使用intellij插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E8%BF%90%E8%A1%8C%E6%8F%92%E4%BB%B6%E7%9A%84IntelliJ%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.设置运行插件的IntelliJ的版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E6%B7%BB%E5%8A%A0%E5%AF%B9Android%E5%B9%B3%E5%8F%B0%E5%BA%93%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="nav-number">4.2.3.</span> <span class="nav-text">3.添加对Android平台库的依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E6%8C%87%E5%AE%9A%E4%BD%A0%E6%9C%AC%E5%9C%B0%E7%9A%84AS%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.指定你本地的AS安装路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E5%9C%A8resources-META-INF-plugin-xml%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">4.2.5.</span> <span class="nav-text">5.在resources&#x2F;META_INF&#x2F;plugin.xml文件中添加相关依赖（重要）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="nav-number">4.3.</span> <span class="nav-text">两种创建方式对比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eplugin-xml"><span class="nav-number">5.</span> <span class="nav-text">关于plugin.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAAction"><span class="nav-number">6.</span> <span class="nav-text">创建第一个Action</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnAction"><span class="nav-number">6.1.</span> <span class="nav-text">AnAction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAAnAction"><span class="nav-number">6.2.</span> <span class="nav-text">创建AnAction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%8E%BB%E7%BB%A7%E6%89%BFAnAction-%E9%9C%80%E8%A6%81%E9%87%8D%E5%86%99%E5%85%B6actionPerformed-%E6%96%B9%E6%B3%95%E5%92%8Cupdate-%E6%96%B9%E6%B3%95%EF%BC%8C%E6%9C%80%E5%90%8E%E9%9C%80%E8%A6%81%E5%9C%A8Plugin-xml%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">6.2.1.</span> <span class="nav-text">1.新建一个类去继承AnAction,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E9%80%9A%E8%BF%87IDEA%E6%8F%90%E4%BE%9B%E7%9A%84%E7%95%8C%E9%9D%A2%E8%BF%9B%E8%A1%8C%E5%88%9B%E5%BB%BA%EF%BC%8C%E5%B9%B6%E9%87%8D%E5%86%99%E5%85%B6actionPerformed-%E6%96%B9%E6%B3%95%E5%92%8Cupdate-%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">6.2.2.</span> <span class="nav-text">2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法：</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="huangxiushuo"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">huangxiushuo</p>
+  <div class="site-description" itemprop="description">上海</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huangxshuo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huangxshuo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huangxiushuo@gmail.com" title="E-Mail → mailto:huangxiushuo@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huangxiushuo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
