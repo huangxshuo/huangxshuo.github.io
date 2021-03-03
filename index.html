@@ -22,9 +22,9 @@
 
   <meta name="description" content="上海">
 <meta property="og:type" content="website">
-<meta property="og:title">
+<meta property="og:title" content="huangxiushuo">
 <meta property="og:url" content="https://huangxshuo.github.io/index.html">
-<meta property="og:site_name">
+<meta property="og:site_name" content="huangxiushuo">
 <meta property="og:description" content="上海">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="huangxiushuo">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title></title>
+  <title>huangxiushuo</title>
   
 
 
@@ -94,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title"></h1>
+      <h1 class="site-title">huangxiushuo</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">道阻且长，行则将至</p>
@@ -158,187 +158,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://huangxshuo.github.io/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="huangxiushuo">
-      <meta itemprop="description" content="上海">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">AndroidStudio插件开发（一）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-02 10:49:43 / 修改时间：17:41:57" itemprop="dateCreated datePublished" datetime="2021-03-02T10:49:43+08:00">2021-03-02</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/02/AndroidStudio插件开发（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在我们日常的开发中经常会使用到各种各样的AS插件，比如<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7369-android-butterknife-zelezny">Android ButterKnife Zelezny</a>，能方便我们快速生成ButterKnife相关代码，<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-">JSON To Kotlin Class</a>,可以通过一段json数据去生成data class，等等。这些插件极大地提高了我们的开发效率。然而之前一直都只是停留在使用阶段，最近基于公司项目的架构开发了一款快速生成模板代码的插件，在此记录并总结一下AS插件开发的一点经验。  </p>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>官方推荐我们使用IDEA去开发插件，一般我们使用社区版的idea就好了，附上<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/#section=mac">下载链接</a>。然后一路安装就ok了。另外，社区版的idea源码也是公开的（jetbrains永远的神），有兴趣你甚至可以自己编译属于你自己版本的idea，附上<a target="_blank" rel="noopener" href="https://github.com/JetBrains/intellij-community">IDEA源码</a>。  </p>
-<h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><p>网上关于AS插件开发的教程不算太多，必要时候还得多翻翻<a target="_blank" rel="noopener" href="https://jetbrains.org/intellij/sdk/docs/basics/getting_started.html">官方开发文档</a>。不过u1s1，纯英文的文档看起来也确实费劲，我个人推荐多去看看开源插件的源码。废话少说，下面进入正题。  </p>
-<h3 id="创建plugin工程的方式"><a href="#创建plugin工程的方式" class="headerlink" title="创建plugin工程的方式"></a>创建plugin工程的方式</h3><h4 id="1-在IDEA中新建plugin项目："><a href="#1-在IDEA中新建plugin项目：" class="headerlink" title="1. 在IDEA中新建plugin项目："></a>1. 在IDEA中新建plugin项目：</h4><p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot1.jpg" alt="screenshot1"></p>
-<ul>
-<li>创建项目时选择IntelliJ Platform Plugin</li>
-<li>Project SDK需要选择插件开发特有的SDK(非JDK)  </li>
-</ul>
-<h4 id="2-使用Gradle来构建插件项目"><a href="#2-使用Gradle来构建插件项目" class="headerlink" title="2.使用Gradle来构建插件项目"></a>2.使用Gradle来构建插件项目</h4><p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot2.jpg" alt="screenshot2"><br>不同于第一种方式,这里使用的Project SDK就是指JDK。下面的依赖中Intellij Platform plugin这一项最好勾选，它会帮助我们添加相关的依赖和生成plugin.xml文件。其他选项可以根据自己的需求添加，我这里用到了Kotlin。然后点击next,项目就创建完成。  </p>
-<p>此时还需要在工程的build.gradle文件中添加相关依赖才能支持构建Intellij Plugin：  </p>
-<h5 id="1-使用intellij插件"><a href="#1-使用intellij插件" class="headerlink" title="1.使用intellij插件"></a>1.使用intellij插件</h5><pre><code>plugins &#123;
-    id &#39;java&#39;
-    id &#39;org.jetbrains.intellij&#39; version &#39;0.4.22&#39;
-    id &#39;org.jetbrains.kotlin.jvm&#39; version &#39;1.4.0&#39;
-&#125;
-</code></pre>
-<blockquote>
-<p>如果上一步勾选了Intellij Platform plugin，这一步忽略  </p>
-</blockquote>
-<h5 id="2-设置运行插件的IntelliJ的版本"><a href="#2-设置运行插件的IntelliJ的版本" class="headerlink" title="2.设置运行插件的IntelliJ的版本"></a>2.设置运行插件的IntelliJ的版本</h5><pre><code>intellij &#123;
-    version &#39;2019.3&#39;
-&#125;
-</code></pre>
-<blockquote>
-<p>可以理解为我们开发APP时设置的TargetSdkVersion  </p>
-</blockquote>
-<h5 id="3-添加对Android平台库的依赖"><a href="#3-添加对Android平台库的依赖" class="headerlink" title="3.添加对Android平台库的依赖"></a>3.添加对Android平台库的依赖</h5><pre><code>dependencies &#123;
-    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib&quot;
-    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
-    compileOnly fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
-    compileOnly fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
-
-    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/android/lib&quot;, include: [&#39;*.jar&#39;])
-    testCompile fileTree(dir: &quot;$StudioCompilePath/plugins/java/lib&quot;, include: [&#39;*.jar&#39;])
-    testCompile fileTree(dir: &quot;$StudioCompilePath/lib&quot;, include: [&#39;*.jar&#39;])
-    testCompile group: &#39;junit&#39;, name: &#39;junit&#39;, version: &#39;4.12&#39;
-&#125;
-</code></pre>
-<blockquote>
-<p>因为我们的插件在运行时是基于AS,所以这些依赖只需要参加编译即可  </p>
-</blockquote>
-<h5 id="4-指定你本地的AS安装路径"><a href="#4-指定你本地的AS安装路径" class="headerlink" title="4.指定你本地的AS安装路径"></a>4.指定你本地的AS安装路径</h5><p>也就是上一步指定的<code>$StudioCompilePath</code>这个变量，我们需要在工程的gradle.properties文件中去指定。我Mac环境的配置如下：<br><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot4.jpg" alt="screenshot4">  </p>
-<h5 id="5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）"><a href="#5-在resources-META-INF-plugin-xml文件中添加相关依赖（重要）" class="headerlink" title="5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）"></a>5.在resources/META_INF/plugin.xml文件中添加相关依赖（重要）</h5><p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot3.jpg" alt="screenshot3">   </p>
-<blockquote>
-<p>这个plugin.xml的作用类似APP开发中的manifest.xml文件。我在之前开发过程中由于缺少对org.jetbrains.android的依赖，导致在解析Android项目时一直报相关的类找不到～_～||  </p>
-</blockquote>
-<p>附一份完整的build.gradle配置:<br><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot5.jpg" alt="screenshot5">  </p>
-<h4 id="两种创建方式对比"><a href="#两种创建方式对比" class="headerlink" title="两种创建方式对比"></a>两种创建方式对比</h4><ul>
-<li>SDK的差异  <ul>
-<li>使用IDEA创建的插件项目中SDK为IDEA插件专用的SDK</li>
-<li>使用Gradle编译的插件项目SDK为JDK</li>
-</ul>
-</li>
-<li>IDEA.iml文件中type不同<ul>
-<li>使用IDEA创建的插件项目中xxx.iml中type为PLUGIN_MODULE</li>
-<li>使用Gradle编译的插件项目中xxx.iml中type为JAVA_MODULE</li>
-</ul>
-</li>
-</ul>
-<p>官方文档上的总结是IDEA创建的插件适用于功能比较简单的插件，对于功能比较复杂的插件建议使用Gradle  </p>
-<h3 id="关于plugin-xml"><a href="#关于plugin-xml" class="headerlink" title="关于plugin.xml"></a>关于plugin.xml</h3><p>IDEA插件的工程创建完毕后，都会在META目录下创建一个plugin.xml文件，可以将它理解为AndroidMainFest.xml，里面定义了一些组件、事件等需要注册的内容。<br>几个属性：  </p>
-<ul>
-<li>id：表示当前插件的唯一id号</li>
-<li>name：插件的名称</li>
-<li>version：插件的版本号</li>
-<li>vendor：填写开发人的邮箱，公司名称</li>
-<li>description：插件的描述，如果将插件上传到IDEA的仓库后，在进行下载的时候就会显示该描述</li>
-<li>idea-version：表示当前插件所支持的所有Intellij Idea 的版本, 详细信息可以参照这个对应关系</li>
-<li>extensions：这里一般会放一些我们自己的扩展的东西，比如新增高亮显示，新增语言支持都是需要在这里进行扩展</li>
-<li>actions：新增的Action类需要在这里注册，用于菜单栏扩展  </li>
-</ul>
-<h3 id="创建第一个Action"><a href="#创建第一个Action" class="headerlink" title="创建第一个Action"></a>创建第一个Action</h3><h4 id="AnAction"><a href="#AnAction" class="headerlink" title="AnAction"></a>AnAction</h4><p>至此一个intellij plugin的项目就已经创建好了，接下来正式开始激动人心的插件开发。首先需要先介绍一个非常重要的类：AnAction。根据官方文档的说法， AnAction表示具有状态、表示和可执行的实体。这样说太抽象，结合使用场景来说，当我们想扩展IDEA提供的菜单栏，那么就可以通过创建Action类来实现相应的功能。  </p>
-<h4 id="创建AnAction"><a href="#创建AnAction" class="headerlink" title="创建AnAction"></a>创建AnAction</h4><p>创建一个Action有两种方式：  </p>
-<h5 id="1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置"><a href="#1-新建一个类去继承AnAction-需要重写其actionPerformed-方法和update-方法，最后需要在Plugin-xml中进行配置" class="headerlink" title="1.新建一个类去继承AnAction,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置"></a>1.新建一个类去继承<code>AnAction</code>,需要重写其actionPerformed()方法和update()方法，最后需要在Plugin.xml中进行配置</h5><h5 id="2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法："><a href="#2-通过IDEA提供的界面进行创建，并重写其actionPerformed-方法和update-方法：" class="headerlink" title="2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法："></a>2.通过IDEA提供的界面进行创建，并重写其actionPerformed()方法和update()方法：</h5><p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot6.jpg" alt="screenshot6">    </p>
-<p> 区别就是使用第二种方式创建时需要填写相关的配置信息，如id、name、快捷键等等：<br> <img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot7.jpg" alt="screenshot7">    </p>
-<p> 具体的Action配置的关键信息：</p>
-<ul>
-<li>group id：多个Action的组合，id需要唯一</li>
-<li>group text：工具栏中group显示的信息</li>
-<li>group icon：group图标</li>
-<li>group popup：action是否为弹出</li>
-<li>action id：action ID，需要唯一</li>
-<li>action class：具体的Action实现类的全限定名</li>
-<li>action text：当前action在工具栏中的展示信息</li>
-<li>add-to-group：group-id决定着当前group或者action显示在工具栏的具体地方，anchor决定着该action或者group显示在该工具栏的具体地方。  </li>
-</ul>
-<p>这里就随便填填，然后点击ok，这样一个Action就创建好了，查看plugin.xml文件，找到我们刚刚创建好的<code>HelloAction</code>:  </p>
-<p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot8.jpg" alt="screenshot8">  </p>
-<p>然后去实现<code>HelloAction</code>的<code>actionPerformed</code>方法，当我们点击这个Action时<code>actionPerformed</code>方法就会被执行。这里我们简单的去实现一下这个方法，点击后会弹出一个弹窗： </p>
-<p><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot9.jpg" alt="screenshot9">    </p>
-<p>然后点击运行：<br><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot10.jpg" alt="screenshot10">  </p>
-<p>就会启动一个新的IntelliJIDEA的界面，在这个IDEA顶部的view菜单中，可以找到我们定义的<code>HelloPlugin</code>:<br><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot11.jpg" alt="screenshot11">    </p>
-<p>点击<code>HelloPlugin</code>：<br><img src="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/screenshot12.jpg" alt="screenshot12">   </p>
-<p>这样一个最简单的Intellij plugin就实现了，在下一篇文章中会实现一些更复杂的功能，包括如何解析一个Android项目，如何生成类文件，资源文件等等。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://imsun.github.io/gitment/style/default.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;https://imsun.github.io/gitment/dist/gitment.browser.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var gitment = new Gitment(&#123;</span><br><span class="line">  id: &#x27;页面 ID&#x27;, // 可选。默认为 location.href</span><br><span class="line">  owner: &#x27;linyuxuanlin&#x27;,  //改你自己的名字</span><br><span class="line">  repo: &#x27;Comments&#x27;,  //专门储存评论一个GitHub仓库</span><br><span class="line">  oauth: &#123;</span><br><span class="line">    client_id: &#x27;45dc966马赛克b1950&#x27;, //改为你自己的，下同</span><br><span class="line">    client_secret: &#x27;839马赛克647523eb马赛克c6ad1f598f5df&#x27;, </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">gitment.render(&#x27;container&#x27;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://huangxshuo.github.io/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -348,7 +167,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
+      <meta itemprop="name" content="huangxiushuo">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -362,10 +181,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：17:10:41" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
+              <time title="创建时间：2021-01-29 12:12:57" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-03 10:27:09" itemprop="dateModified" datetime="2021-03-03T10:27:09+08:00">2021-03-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -391,20 +216,6 @@
   </span>
   
   
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -415,541 +226,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h3><ul>
-<li> 语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性。</li>
-<li> Java中最常用的语法糖主要有<strong>泛型</strong>、<strong>变长参数</strong>、<strong>条件编译</strong>、<strong>自动拆装箱</strong>、<strong>内部类</strong>等。  </li>
-</ul>
-<h3 id="解语法糖（脱糖）"><a href="#解语法糖（脱糖）" class="headerlink" title="解语法糖（脱糖）"></a>解语法糖（脱糖）</h3><p>语法糖的存在主要是方便开发人员使用，但JVM并不支持这些语法糖。因此这些<strong>语法糖在编译阶段就会被还原成简单的基础语法结构</strong>，这个过程就是解语法糖。  </p>
-<h3 id="Java匿名内部类和转写成Lambda，字节码上的区别"><a href="#Java匿名内部类和转写成Lambda，字节码上的区别" class="headerlink" title="Java匿名内部类和转写成Lambda，字节码上的区别"></a>Java匿名内部类和转写成Lambda，字节码上的区别</h3><pre><code>//Lambda写法
-class LambdaTest &#123;
-    public static void main(String[] args) &#123;
-        Runnable r = () -&gt; &#123;
-            System.out.println(&quot;hello, lambda&quot;);
-        &#125;;
-        r.run();
-    &#125;
-&#125;  
-
-
-//匿名内部类写法    
-class LambdaTest2 &#123;
-    public static void main(String[] args) &#123;
-        Runnable r = new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                System.out.println(&quot;hello lambda&quot;);
-            &#125;
-        &#125;;
-        r.run();
-    &#125;
-&#125;  
-</code></pre>
-<ul>
-<li>匿名内部类写法在编译后会而外生成<code>LambdaTest2$1.class</code>类：</li>
-</ul>
-<pre><code>&#123;
-  lambda.LambdaTest2();
-    descriptor: ()V
-    flags:
-    Code:
-      stack=1, locals=1, args_size=1
-         0: aload_0
-         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
-         4: return
-      LineNumberTable:
-        line 8: 0
-
-  public static void main(java.lang.String[]);
-    descriptor: ([Ljava/lang/String;)V
-    flags: ACC_PUBLIC, ACC_STATIC
-    Code:
-      stack=2, locals=2, args_size=1
-         0: new           #2                  // class lambda/LambdaTest2$1
-         3: dup
-         4: invokespecial #3                  // Method lambda/LambdaTest2$1.&quot;&lt;init&gt;&quot;:()V
-         7: astore_1
-         8: aload_1
-         9: invokeinterface #4,  1            // InterfaceMethod java/lang/Runnable.run:()V
-        14: return
-      LineNumberTable:
-        line 11: 0
-        line 17: 8
-        line 18: 14
-&#125;  
-</code></pre>
-<ul>
-<li>Lambda写法在编译后并没有生成额外的类： </li>
-</ul>
-<pre><code>&#123;
-  lambda.LambdaTest();
-    descriptor: ()V
-    flags:
-    Code:
-      stack=1, locals=1, args_size=1
-         0: aload_0
-         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
-         4: return
-      LineNumberTable:
-        line 8: 0
-
-  public static void main(java.lang.String[]);
-    descriptor: ([Ljava/lang/String;)V
-    flags: ACC_PUBLIC, ACC_STATIC
-    Code:
-      stack=1, locals=2, args_size=1
-         0: invokedynamic #2,  0              // InvokeDynamic #0:run:()Ljava/lang/Runnable;
-         5: astore_1
-         6: aload_1
-         7: invokeinterface #3,  1            // InterfaceMethod java/lang/Runnable.run:()V
-        12: return
-      LineNumberTable:
-        line 10: 0
-        line 13: 6
-        line 14: 12
-&#125;  
-</code></pre>
-<p>在<code>invokedynamic</code>执行完之后，存储栈顶值，入栈。然后调用接口<code>Runnable</code>的<code>run()</code>方法。<br>这里的<strong>InvokeDynamic #0</strong>后面的#0对应的并不是常量池里的索引，而是一个叫<code>BootstrapMethods</code>的:</p>
-<pre><code>0: #20 invokestatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
-    Method arguments:
-      #21 ()V
-      #22 invokestatic lambda/LambdaTest.lambda$main$0:()V
-      #21 ()V
-      
-</code></pre>
-<p>也就是0:后面的内容，可以看出它是通过<code>invokedynamic</code>来调用<code>LambdaMetafactory</code>的<code>metafactory</code>方法。断点可知：  </p>
-<pre><code>    public static CallSite metafactory(MethodHandles.Lookup caller,     //caller: &quot;lambda.LambdaTest&quot;
-                                       String invokedName,      //invokedName: &quot;run&quot;
-                                       MethodType invokedType,      //invokedType: &quot;()Runnable&quot;      
-                                       MethodType samMethodType,    //samMethodType: &quot;()void&quot;
-                                       MethodHandle implMethod,     //implMethod: &quot;MethodHandle()void&quot;
-                                       MethodType instantiatedMethodType)   //instantiatedMethodType: &quot;()void&quot;
-            throws LambdaConversionException &#123;
-        AbstractValidatingLambdaMetafactory mf;
-        mf = new InnerClassLambdaMetafactory(caller, invokedType,
-                                             invokedName, samMethodType,
-                                             implMethod, instantiatedMethodType,
-                                             false, EMPTY_CLASS_ARRAY, EMPTY_MT_ARRAY);
-        mf.validateMetafactoryArgs();
-        return mf.buildCallSite();
-    &#125;
-</code></pre>
-<blockquote>
-<p> <strong>invokedynamic</strong><br>    JVM字节码指令集一直比较稳定，一直到JAVA7中才增加了一个<code>invokedynamic</code>指令，这是JAVA为了实现<strong>动态类型语言</strong>支持而做的一种改进。但是在JAVA7中并没有提供直接生成<code>invokedynamic</code>指令的方法，需要借助<strong>ASM</strong>这种底层字节码工具来产生<code>invokedynamic</code>指令。直到JAVA8的Lambda表达式的出现，<code>invokedynamic</code>指令的生成，在java中才有了直接的生成方式。 </p>
-</blockquote>
-<p>invokedynamic指令所指定的bootstrap方法，编译器置入，java7中要自己提供一个这种静态方法，由asm工具写入字节码中，java8中jdk提供了这样的一个启动方法。JVM在类加载解析时，如果是invokedynamic时，每次都会进行重新解析，解析的时候，会首先执行bootstrap方法，LambdaMetafactory.metafactory方法的前三个参数，会在运行时根据访问类和运行期常量池动态传入，而后三个参数，则为bootstrap静态参数列表传入：</p>
-<ol>
-<li>泛型擦除后的方法签名及返回值；  </li>
-<li>对应的匿名方法；</li>
-<li>泛型擦除之前的方法签名及返回值  </li>
-</ol>
-<p>2调用的方法：<code>lambda$main$0:()</code>，而<code>LambdaTest</code>中并没有这个方法，猜测是编译器帮我们生成的，通过javap -p命令：  </p>
-<pre><code>class lambda.LambdaTest &#123;
-  lambda.LambdaTest();
-  public static void main(java.lang.String[]);
-  private static void lambda$main$0();
-&#125;  
-</code></pre>
-<p>可以看到<code>LambdaTest</code>确实多了一个<code>lambda$main$0:()</code>方法。反射调用这个方法：</p>
-<pre><code>class LambdaTest &#123;
-    public static void main(String[] args) throws Exception&#123;
-        Runnable r = () -&gt; &#123;
-            System.out.println(&quot;hello, lambda&quot;);
-        &#125;;
-        r.run();
-        LambdaTest.class.getDeclaredMethod(&quot;lambda$main$0&quot;).invoke(null);
-    &#125;
-&#125;  
-</code></pre>
-<p>“hello lambda”多打印了一次，查看其字节码： </p>
-<pre><code> private static synthetic lambda$main$0()V
-   L0
-    LINENUMBER 11 L0
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    LDC &quot;hello, lambda&quot;
-    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
-   L1
-    LINENUMBER 12 L1
-    RETURN
-    MAXSTACK = 2
-    MAXLOCALS = 0  
-</code></pre>
-<p>对比<code>LambdaTest2</code>run()方法的字节码：  </p>
-<pre><code>  public run()V
-   L0
-    LINENUMBER 14 L0
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    LDC &quot;hello lambda&quot;
-    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
-   L1
-    LINENUMBER 15 L1
-    RETURN
-   L2
-    LOCALVARIABLE this Llambda/LambdaTest2$1; L0 L2 0
-    MAXSTACK = 2
-    MAXLOCALS = 1
-</code></pre>
-<p>完全是一样的，获取静态变量<code>System.out</code>，<code>&quot;hello lambda&quot;</code>入栈，然后调用<code>PrintStream.println</code>方法。<br>那么这个<code>lambda$main$0()</code>是在哪里被调用的？两种方式：</p>
-<ul>
-<li><strong>抛异常打印堆栈信息</strong></li>
-<li><strong>借鉴Class.forName的做法——通过Reflection的getCallerClass来获取到调用者的Class信息：</strong>  </li>
-</ul>
-<pre><code>public class LambdaTest &#123;
-    public static void main(String[] args) throws Exception &#123;
-        Runnable r = () -&gt; &#123;
-            try &#123;
-                Method getCallerClass = Class.forName(&quot;sun.reflect.Reflection&quot;).getDeclaredMethod(&quot;getCallerClass&quot;, int.class);
-                int index = 0;
-                Class&lt;?&gt; callerClass;
-                while ((callerClass = (Class&lt;?&gt;) getCallerClass.invoke(null, index)) != null) &#123;
-                    System.out.println(callerClass);
-                    index++;
-                &#125;
-            &#125; catch (Exception e) &#123;
-                e.printStackTrace();
-            &#125;
-        &#125;;
-        r.run();
-    &#125;
-&#125;  
-</code></pre>
-<p> 运行后打印可知调用<code>lambda$main$0()</code>方法的是一个叫<code>lambda.LambdaTest$$Lambda$1/1531448569</code>的类<br>但我们在编译后并没有生成这个类，那可以推测它是JVM在运行时动态生成和加载的Runnable的实现类。打印Runnable实例的类名：</p>
-<pre><code>System.out.println(String.format(&quot;Runnable Class: %s&quot;, r.getClass().getSimpleName()));
-</code></pre>
-<p>打印结果: </p>
-<pre><code>hello, lambda
-class sun.reflect.Reflection
-class lambda.LambdaTest
-class lambda.LambdaTest$$Lambda$1/1531448569
-class lambda.LambdaTest
-Runnable Class: LambdaTest$$Lambda$1/1531448569
-</code></pre>
-<ul>
-<li>结论：Lambda表达式在编译后，其函数体都会放到CallerClass里一个额外生成的方法内（所谓的”匿名”函数），由JVM动态生成的实现类去调用。最终它也是通过内部类的方式实现的，只不过不像直接使用内部类那样在编译后生成额外的类，它把生成实现类这一步放到了运行时，由JVM完成。</li>
-</ul>
-<h3 id="Java中的Lambda与Android中的Lambda有什么不同？"><a href="#Java中的Lambda与Android中的Lambda有什么不同？" class="headerlink" title="Java中的Lambda与Android中的Lambda有什么不同？"></a>Java中的Lambda与Android中的Lambda有什么不同？</h3><pre><code>public class MainActivity extends AppCompatActivity &#123;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Runnable r = () -&gt; &#123;
-            Log.d(&quot;MainActivity&quot;, &quot;hello lambda&quot;);
-        &#125;;
-        r.run();
-    &#125;
-&#125;
-</code></pre>
-<p>编译后打开dex：</p>
-<pre><code>MainActivity
-    &lt;linit&gt;()
-    void lambda$onCreate$0()
-    void onCreate(android.os.Bundle)
-    void setContentView(int)
--$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA
-    &lt;clinit&gt;()
-    &lt;init&gt;()
-    void run()
-    com.hxs.androiddesugardemo.-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA INSTANCE 
-</code></pre>
-<p>发现此时这个类已经存在dex里面了，同时<code>MainActivity</code>也多了一个<strong>lambda$onCreate$0</strong>方法。查看这个方法的字节码：</p>
-<pre><code>.method static synthetic lambda$onCreate$0()V
-    .registers 2
-
-    .line 15
-    const-string v0, &quot;MainActivity&quot;
-
-    const-string v1, &quot;hello lambda&quot;
-
-    invoke-static &#123;v0, v1&#125;, Landroid/util/Log;-&gt;d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 16
-    new-instance v0, Ljava/lang/RuntimeException;
-
-    invoke-direct &#123;v0&#125;, Ljava/lang/RuntimeException;-&gt;&lt;init&gt;()V
-
-    throw v0
-.end method
-</code></pre>
-<ol>
-<li>先注册了2个寄存器；</li>
-<li>把字符串常量 “Application” 赋值给寄存器v0；</li>
-<li>把字符串常量 “hello, lambda” 赋值给寄存器v1；</li>
-<li>调用android.util.Log的静态方法d，把寄存器v0和v1的值传了进去（Log.d(“Application”, “hello, lambda”);）；</li>
-<li>创建java.lang.RuntimeException对象实例，并赋值到寄存器v0上；</li>
-<li>调用java.lang.RuntimeException的<init>()方法（即无参构造函数），目标对象是寄存器v0储存的值；</init></li>
-<li>抛出异常，目标对象是寄存器v0储存的值（throw new RuntimeException();）；  </li>
-</ol>
-<p><strong>这里和Java的处理方式是一样的</strong>，将Lambda主体移到了一个额外生成的方法里。<br>查看onCreate()方法：</p>
-<pre><code>    method protected onCreate(Landroid/os/Bundle;)V
-        .registers 3
-        .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
-    
-        .line 12
-        invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/AppCompatActivity;-&gt;onCreate(Landroid/os/Bundle;)V
-    
-        .line 13
-        const v0, 0x7f0b001c
-    
-        invoke-virtual &#123;p0, v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;setContentView(I)V
-    
-        .line 14
-        sget-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    
-        .line 18
-        .local v0, &quot;r&quot;:Ljava/lang/Runnable;
-        invoke-interface &#123;v0&#125;, Ljava/lang/Runnable;-&gt;run()V
-    
-        .line 19
-        return-void
-    .end method
-      
-      
-</code></pre>
-<p>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量<strong>r</strong>，类型是java/lang/Runnable，初始值是寄存器**v0的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
-<p> <strong>这里把原来的【创建对象实例】改成了【获取静态字段】。其实这只是一个优化，因为lambda函数体没有依赖CallerClass的变量或方法，完全可以作为一个静态变量存在，这样能避免反复创建对象</strong></p>
-<p>查看这个实现类的字节码：</p>
-<pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    .super Ljava/lang/Object;
-    .source &quot;lambda&quot;
-    
-    # interfaces
-    .implements Ljava/lang/Runnable;
-    
-    
-    # static fields
-    .field public static final synthetic INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    
-    
-    # direct methods
-    .method static synthetic constructor &lt;clinit&gt;()V
-        .registers 1
-    
-        new-instance v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    
-        invoke-direct &#123;v0&#125;, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;&lt;init&gt;()V
-    
-        sput-object v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    
-        return-void
-    .end method
-    
-    .method private synthetic constructor &lt;init&gt;()V
-        .registers 1
-    
-        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
-    
-        return-void
-    .end method
-    
-    # virtual methods
-    .method public final run()V
-        .registers 1
-    
-        invoke-static &#123;&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0()V
-    
-        return-void
-    .end method
-</code></pre>
-<p>在类被加载的时候，就创建了他自己的对象实例并赋值给静态变量<strong>INSTANCE</strong>。实现的run()方法，里面也是直接调用MainActivity的<strong>静态方法lambda$onCreate$0</strong>。  </p>
-<p><strong>如果Lambda表达式调用了CallerClass的变量呢？</strong><br>将代码稍微改造下：</p>
-<pre><code>public class MainActivity extends AppCompatActivity &#123;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        String tip = &quot;hello lambda&quot;;
-        Runnable r = () -&gt; &#123;
-            Log.d(&quot;MainActivity&quot;, tip);
-            throw new RuntimeException();
-        &#125;;
-        r.run();
-    &#125;
-&#125;
-</code></pre>
-<p>查看**onCreate()**方法的字节码：</p>
-<pre><code>.method protected onCreate(Landroid/os/Bundle;)V
-    .registers 4
-    .param p1, &quot;savedInstanceState&quot;    # Landroid/os/Bundle;
-
-    .line 12
-    invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/AppCompatActivity;-&gt;onCreate(Landroid/os/Bundle;)V
-
-    .line 13
-    const v0, 0x7f0b001c
-
-    invoke-virtual &#123;p0, v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;setContentView(I)V
-
-    .line 14
-    const-string v0, &quot;hello lambda&quot;
-
-    .line 15
-    .local v0, &quot;tip&quot;:Ljava/lang/String;
-    new-instance v1, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;
-
-    .local v1, &quot;r&quot;:Ljava/lang/Runnable;
-    invoke-direct &#123;v1, v0&#125;, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;&lt;init&gt;(Ljava/lang/String;)V
-
-    .line 19
-    invoke-interface &#123;v1&#125;, Ljava/lang/Runnable;-&gt;run()V
-
-    .line 20
-    return-void
-.end method  
-</code></pre>
-<p>第15行，对比之前获取静态变量INSTANCE，<strong>这里变成了new-instace构造这个实现类的实例</strong><br>查看该实现类的字节码： </p>
-<pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;
-    .super Ljava/lang/Object;
-    .source &quot;lambda&quot;
-    
-    # interfaces
-    .implements Ljava/lang/Runnable;
-    
-    
-    # instance fields
-    .field public final synthetic f$0:Ljava/lang/String;
-    
-    
-    # direct methods
-    .method public synthetic constructor &lt;init&gt;(Ljava/lang/String;)V
-        .registers 2
-    
-        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
-    
-        iput-object p1, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
-    
-        return-void
-    .end method
-    
-    
-    # virtual methods
-    .method public final run()V
-        .registers 2
-    
-        iget-object v0, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
-    
-        invoke-static &#123;v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0(Ljava/lang/String;)V
-    
-        return-void
-    .end method
-</code></pre>
-<p>已经没有加载时构建实例对象的代码了，不过实现的run()方法还是一致的。  </p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p><strong>Andorid的Lambda在打包成dex时会直接生成对应的实现类，相比于java的<code>invokedynamic</code>这种方式，不同的只是==生成实现类的时机==，这跟直接使用匿名内部类的效基本没有区别。</strong>  </p>
-<p>其实在Lambda编译成class时，还是按照Java原本的方式（<code>invokedynamic</code>）处理的，查看class文件：</p>
-<pre><code>    public class com.hxs.androiddesugardemo.MainActivity extends androidx.appcompat.app.AppCompatActivity &#123;
-      public com.hxs.androiddesugardemo.MainActivity();
-        Code:
-           0: aload_0
-           1: invokespecial #1                  // Method androidx/appcompat/app/AppCompatActivity.&quot;&lt;init&gt;&quot;:()V
-           4: return
-    
-      protected void onCreate(android.os.Bundle);
-        Code:
-           0: aload_0
-           1: aload_1
-           2: invokespecial #2                  // Method androidx/appcompat/app/AppCompatActivity.onCreate:(Landroid/os/Bundle;)V
-           5: aload_0
-           6: ldc           #4                  // int 2131427356
-           8: invokevirtual #5                  // Method setContentView:(I)V
-          11: ldc           #6                  // String hello lambda
-          13: astore_2
-          14: aload_2
-          15: invokedynamic #7,  0              // InvokeDynamic #0:run:(Ljava/lang/String;)Ljava/lang/Runnable;
-          20: astore_3
-          21: aload_3
-          22: invokeinterface #8,  1            // InterfaceMethod java/lang/Runnable.run:()V
-          27: return
-    &#125;
-    
-</code></pre>
-<p>脱糖这一步是由D8编译器去做的，<strong>desugarDebug(Release)FileDependencies</strong>和**dexBuilderDebug(Release)**，前者是把项目依赖的所有jar包脱糖，后者是将项目自己的class脱糖。</p>
-<h3 id="D8脱糖"><a href="#D8脱糖" class="headerlink" title="D8脱糖"></a>D8脱糖</h3><p>使用Javac将Java8.java编译成.class</p>
-<pre><code>class Java8 &#123;
-    interface Logger &#123;
-        void log(String s);
-    &#125;
-
-    public static void main(String... args) &#123;
-        sayHi(s -&gt; System.out.println(s));
-    &#125;
-
-    private static void sayHi(Logger logger) &#123;
-        logger.log(&quot;Hello!&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>在使用 javac 编译之后，使用 dx 直接运行会报错：</p>
-<pre><code>MiracledeMacBook-Pro:d8 miracle$ ~/Library/Android/sdk/build-tools/28.0.3/dx --dex --output . *.class
-Uncaught translation error: com.android.dx.cf.code.SimException:
-ERROR in Java8.main:([Ljava/lang/String;)V: 
-invalid opcode ba - invokedynamic requires --min-sdk-version &gt;= 26 (currently 13)
-</code></pre>
-<p>因为 lambda 的实现使用到了 Java 7 新增加的字节码 invokedynamic. 正如报错信息提示的那样，<strong>Android 对这个字节码的支持是在 API 26(8.0) 以上才实现的</strong>。因此android有一个名为desugaring的编译流程，它将lambda转换为所有API都兼容的形式。  </p>
-<h4 id="desugaring的目标？"><a href="#desugaring的目标？" class="headerlink" title="desugaring的目标？"></a>desugaring的目标？</h4><p>让新的语法糖可以运行在所有设备上      </p>
-<h4 id="desugaring的历史"><a href="#desugaring的历史" class="headerlink" title="desugaring的历史"></a>desugaring的历史</h4><p>我们使用一款名为 Retrolambda 来实现相关的功能。它使用 JVM 的内建机制，在运行时而不是编译时将 lambda 转换为类的实现。生成新的类很容易增加方法数，但是如果权衡利弊这些成本还是可以接受的 (but work on the tool over time reduced the cost to something reasonable).</p>
-<p>随后 Android 的工具链团队发布了一款新的编译器，称其可以将 Java 8 的语法糖脱糖的同时还兼备更好的性能。这款编译器是基于 Eclipse 的 Java 编译器开发的，但是目标是 Dalvik 字节码而不是 Java 字节码。这个版本的 Java 8 的脱糖实现代价高昂，并且使用率低、性能差，与其他工具链不兼容。</p>
-<p>当上述的新的编译器最终被弃用时（感谢），一款新的将 Java 字节码翻译到 Java 字节码的脱糖转换器被集成到了 Android Gradle Plugin 中，它实际上源自 Google 自己的构建工具 Bazel. 其脱糖过程挺高效的，但是性能表现仍然不是很理想。事实上它是一个渐进式的解决方案，不停地在寻找更好的解决方案。</p>
-<p>随后 D8 发布了，被用来取代传统的 dx 工具链，承诺在 dex 过程中脱糖而不是使用标准的 Java 字节码做转换。相对于 dx 而言，D8 在性能上取得了巨大的成功，并且带来了更高效的脱糖字节码。从 Android Gradle Plugin 3.1 版本开始，D8 成为了默认的 dex 工具，在 3.2 版本开始负责脱糖。</p>
-<p>然后使用D8将上述例子编译为.dex： </p>
-<pre><code>java -jar d8.jar --lib /Users/miracle/Library/Android/sdk/platforms/android-28/android.jar
---release 
---output . *.class
-</code></pre>
-<p>发现编译成功了：</p>
-<pre><code>Java8$Logger.class    
-Java8.java
-Java8.class
-classes.dex
-</code></pre>
-<p>然后使用Android SDK 中提供的 dexdump 来查看classes.dex中的字节码:  <code>/Users/miracle/Library/Android/sdk/build-tools/28.0.3/dexdump -d classes.dex：</code>（分析流程同上）</p>
-<blockquote>
-<p><strong>SYNTHETIC</strong> 标志相关类和方法是被生成的<br><strong>lambda 代码块存在于原来的类的内部的原因在于，它可能需要访问该类的私有成员变量，而生成的类却是访问不到的。</strong>. </p>
-</blockquote>
-<h3 id="原生的Lambda"><a href="#原生的Lambda" class="headerlink" title="原生的Lambda"></a>原生的Lambda</h3><p>当配合 –min-api 26 参数编译的话，它会假定你将使用原生的lambda实现而不会进行脱糖：  </p>
-<pre><code>java -jar d8.jar --lib /Users/miracle/Library/Android/sdk/platforms/android-28/android.jar
-    --release 
-    --min-api 26
-    --output . *.class
-</code></pre>
-<p>然而查看生成的.dex文件，还是会发现-$$Lambda$Java8$QkyWJ8jlAksLjYziID4cZLvHwoY 的类被生成了。是bug吗？<br>原因是java原生的指令invokedynamic的处理是借助java.lang.invoke.LambdaMetafactory 这个类中的名为 metafactory 的方法在运行时即时创建lambda相关的匿名类。而在android的运行时库中（android.jar）其实并没有这个类，android实现了与invokedynamic相同效果的字节码支持，但jdk内建的LambdaMetafactory并不可用。所以D8将这个匿名类的生成放到了编译期，然后使用<code>invokedynamic</code>和<code>invoke-custom</code>这两条指令去执行。<br><a target="_blank" rel="noopener" href="https://www.pnfsoftware.com/blog/android-o-and-dex-version-38-new-dalvik-opcodes-to-support-dynamic-invocation/">这篇文章</a>对这两条指令做了解释，不太懂，大概意思是google为了支持更多的动态语言特性？  </p>
-<h3 id="Method-Referencens-方法引用"><a href="#Method-Referencens-方法引用" class="headerlink" title="Method Referencens(方法引用)"></a>Method Referencens(方法引用)</h3><p>Java8中另一个语法糖，作为lambda的补充，使得创建lambda去指向一个已有的方法的操作变得高效。</p>
-<pre><code>public static void main(String... args) &#123;
--    sayHi(s -&gt; System.out.println(s));
-+    sayHi(System.out::println);
-&#125;
-</code></pre>
-<p>使用 javac 编译后，再用 D8 处理，我们会发现与之前的 lambda 有一处显著的不同，会发现生成的 lambda 类的代码块被改变了：  </p>
-<pre><code>|[00023c] -..Lambda.teOjDu261Kz9uXGt1wlPvIP5S04.log:(Ljava/lang/String;)V
-|0000: iget-object v0, v0, L-$$Lambda$teOjDu261Kz9uXGt1wlPvIP5S04;.f$0:Ljava/io/PrintStream; // field@0000
-|0002: invoke-virtual &#123;v0, v1&#125;, Ljava/io/PrintStream;.println:(Ljava/lang/String;)V // method@0006
-|0005: return-void
-</code></pre>
-<p>与之前调用生成的Java8.lambda$main$0类中包含System.out.print()方法不同，log的实现直接调用了System.out.print()  </p>
-<p>生成的 lambda 类不再是静态单例。字节序 0000 直接读取了 PrintStream 的实例引用，该引用即是 System.out, 它在 main 方法中被调用，并且被传递给相应的构造器（名为 <init> 的字节码）  </init></p>
-<p> 将其进行源码级别的转换：</p>
-<pre><code>public static void main(String... args) &#123;
--    sayHi(System.out::println);
-+    sayHi(new -$$Lambda$1Osqr2Z9OSwjseX_0FMQJcCG_uM(System.out));
-   &#125;
-@@
- &#125;
-+
-+class -$$Lambda$1Osqr2Z9OSwjseX_0FMQJcCG_uM implements Java8.Logger &#123;
-+  private final PrintStream ps;
-+
-+  -$$Lambda$1Osqr2Z9OSwjseX_0FMQJcCG_uM(PrintStream ps) &#123;
-+    this.ps = ps;
-+  &#125;
-+
-+  @Override public void log(String s) &#123;
-+    ps.println(s);
-+  &#125;
-+&#125;
-</code></pre>
-<h3 id="Interface-Methods"><a href="#Interface-Methods" class="headerlink" title="Interface Methods"></a>Interface Methods</h3><p>Java 8 另一个显著的特性是可以在接口中定义静态方法和默认方法。接口中的静态方法可以被用来提供相关的工厂方法，或者其他有助于操作接口的方法。接口中的默认方法则允许你给已有接口中添加默认的方法实现，同时保持兼容性（你不需要给所有实现了该接口的类再全部实现一个新的方法） </p>
-<p> <strong>这两种语法糖在 API 24 以上都是使用的原生实现。因此不像 lambda 和方法引用，–min-api 24 不会触发 D8 的脱糖操作</strong>  </p>
-<p><a target="_blank" rel="noopener" href="https://jakewharton.com/androids-java-8-support/">Android’s Java 8 Support</a> - Jake Wharton. </p>
-
+          <p>语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1032,7 +317,7 @@ classes.dex
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1045,7 +330,7 @@ classes.dex
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1149,35 +434,6 @@ classes.dex
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
-</script>
-
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'TfAJWXLDbgQDlEdmwt5PU8le-gzGzoHsz',
-      appKey     : 'vNnXRO1eboDIEHXrzCvFKaF5',
-      placeholder: "Just go go",
-      avatar     : 'mm',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : false,
-      lang       : '' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : false,
-      serverURLs : ''
-    });
-  }, window.Valine);
-});
 </script>
 
 </body>

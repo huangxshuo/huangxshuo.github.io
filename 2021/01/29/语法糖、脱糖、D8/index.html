@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"huangxshuo.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="语法糖  语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性。  Java中最常用的语法糖主要有泛型、变长参数、条件编译、自动拆装箱、内部类等。    解语法糖（脱糖）语法糖的存在主要是方便开发人员使用，但JVM并不支持这些语法糖。因此这些语法糖在编译阶段就会被还原成简单的基础">
+  <meta name="description" content="语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="语法糖、脱糖、D8">
 <meta property="og:url" content="https://huangxshuo.github.io/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/index.html">
-<meta property="og:site_name">
-<meta property="og:description" content="语法糖  语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性。  Java中最常用的语法糖主要有泛型、变长参数、条件编译、自动拆装箱、内部类等。    解语法糖（脱糖）语法糖的存在主要是方便开发人员使用，但JVM并不支持这些语法糖。因此这些语法糖在编译阶段就会被还原成简单的基础">
+<meta property="og:site_name" content="huangxiushuo">
+<meta property="og:description" content="语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-29T04:12:57.000Z">
-<meta property="article:modified_time" content="2021-01-29T09:10:41.563Z">
+<meta property="article:modified_time" content="2021-03-03T02:27:09.062Z">
 <meta property="article:author" content="huangxiushuo">
 <meta property="article:tag" content="Lambda">
 <meta property="article:tag" content="JVM">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>语法糖、脱糖、D8 | </title>
+  <title>语法糖、脱糖、D8 | huangxiushuo</title>
   
 
 
@@ -99,7 +99,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title"></h1>
+      <h1 class="site-title">huangxiushuo</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">道阻且长，行则将至</p>
@@ -173,7 +173,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
+      <meta itemprop="name" content="huangxiushuo">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -186,10 +186,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-29 12:12:57 / 修改时间：17:10:41" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
+              <time title="创建时间：2021-01-29 12:12:57" itemprop="dateCreated datePublished" datetime="2021-01-29T12:12:57+08:00">2021-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-03 10:27:09" itemprop="dateModified" datetime="2021-03-03T10:27:09+08:00">2021-03-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -215,20 +221,7 @@
   </span>
   
   
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/%E8%AF%AD%E6%B3%95%E7%B3%96%E3%80%81%E8%84%B1%E7%B3%96%E3%80%81D8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
+            <div class="post-description">语法糖（Syntactic），也称语法糖衣，指在计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但更方便程序员使用。简而言之，语法糖然程序更加简洁，有更高的可读性</div>
 
         </div>
       </header>
@@ -332,13 +325,12 @@ class LambdaTest2 &#123;
         line 14: 12
 &#125;  
 </code></pre>
-<p>在<code>invokedynamic</code>执行完之后，存储栈顶值，入栈。然后调用接口<code>Runnable</code>的<code>run()</code>方法。<br>这里的<strong>InvokeDynamic #0</strong>后面的#0对应的并不是常量池里的索引，而是一个叫<code>BootstrapMethods</code>的:</p>
+<p>​<br>在<code>invokedynamic</code>执行完之后，存储栈顶值，入栈。然后调用接口<code>Runnable</code>的<code>run()</code>方法。<br>这里的<strong>InvokeDynamic #0</strong>后面的#0对应的并不是常量池里的索引，而是一个叫<code>BootstrapMethods</code>的:</p>
 <pre><code>0: #20 invokestatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
     Method arguments:
       #21 ()V
       #22 invokestatic lambda/LambdaTest.lambda$main$0:()V
       #21 ()V
-      
 </code></pre>
 <p>也就是0:后面的内容，可以看出它是通过<code>invokedynamic</code>来调用<code>LambdaMetafactory</code>的<code>metafactory</code>方法。断点可知：  </p>
 <pre><code>    public static CallSite metafactory(MethodHandles.Lookup caller,     //caller: &quot;lambda.LambdaTest&quot;
@@ -526,10 +518,8 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
         .line 19
         return-void
     .end method
-      
-      
 </code></pre>
-<p>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量<strong>r</strong>，类型是java/lang/Runnable，初始值是寄存器**v0的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
+<p>​<br>第14行，获取那个自动生成的实现类的静态变量==INSTANCE==，它的类型是这个类本身，也就是说INSTANCE是自动生成的实现类的实例，并赋值到寄存器v0上；<br>第18行，声明局部变量<strong>r</strong>，类型是java/lang/Runnable，初始值是寄存器**v0的值，然后调用java/lang/Runnable的借口方法run()，目标对象是寄存器v0存储的值。  </p>
 <p> <strong>这里把原来的【创建对象实例】改成了【获取静态字段】。其实这只是一个优化，因为lambda函数体没有依赖CallerClass的变量或方法，完全可以作为一个静态变量存在，这样能避免反复创建对象</strong></p>
 <p>查看这个实现类的字节码：</p>
 <pre><code>    .class public final synthetic Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
@@ -538,17 +528,10 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
     
     # interfaces
     .implements Ljava/lang/Runnable;
-    
-    
-    # static fields
-    .field public static final synthetic INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
-    
-    
-    # direct methods
-    .method static synthetic constructor &lt;clinit&gt;()V
-        .registers 1
-    
-        new-instance v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
+</code></pre>
+<p>​<br>        # static fields<br>        .field public static final synthetic INSTANCE:Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;</p>
+<p>​<br>        # direct methods<br>        .method static synthetic constructor <clinit>()V<br>            .registers 1</clinit></p>
+<pre><code>        new-instance v0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;
     
         invoke-direct &#123;v0&#125;, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$NKcUHI3kbmdlSYn5oJ5mHUINomA;-&gt;&lt;init&gt;()V
     
@@ -628,29 +611,18 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
     
     # interfaces
     .implements Ljava/lang/Runnable;
-    
-    
-    # instance fields
-    .field public final synthetic f$0:Ljava/lang/String;
-    
-    
-    # direct methods
-    .method public synthetic constructor &lt;init&gt;(Ljava/lang/String;)V
-        .registers 2
-    
-        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
+</code></pre>
+<p>​<br>        # instance fields<br>        .field public final synthetic f$0:Ljava/lang/String;</p>
+<p>​<br>        # direct methods<br>        .method public synthetic constructor <init>(Ljava/lang/String;)V<br>            .registers 2</init></p>
+<pre><code>        invoke-direct &#123;p0&#125;, Ljava/lang/Object;-&gt;&lt;init&gt;()V
     
         iput-object p1, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
     
         return-void
     .end method
-    
-    
-    # virtual methods
-    .method public final run()V
-        .registers 2
-    
-        iget-object v0, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
+</code></pre>
+<p>​<br>        # virtual methods<br>        .method public final run()V<br>            .registers 2</p>
+<pre><code>        iget-object v0, p0, Lcom/hxs/androiddesugardemo/-$$Lambda$MainActivity$f0md4yi5o91GRldVVHmjjcHcul8;-&gt;f$0:Ljava/lang/String;
     
         invoke-static &#123;v0&#125;, Lcom/hxs/androiddesugardemo/MainActivity;-&gt;lambda$onCreate$0(Ljava/lang/String;)V
     
@@ -684,7 +656,6 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
           22: invokeinterface #8,  1            // InterfaceMethod java/lang/Runnable.run:()V
           27: return
     &#125;
-    
 </code></pre>
 <p>脱糖这一步是由D8编译器去做的，<strong>desugarDebug(Release)FileDependencies</strong>和**dexBuilderDebug(Release)**，前者是把项目依赖的所有jar包脱糖，后者是将项目自己的class脱糖。</p>
 <h3 id="D8脱糖"><a href="#D8脱糖" class="headerlink" title="D8脱糖"></a>D8脱糖</h3><p>使用Javac将Java8.java编译成.class</p>
@@ -702,7 +673,7 @@ Runnable Class: LambdaTest$$Lambda$1/1531448569
     &#125;
 &#125;
 </code></pre>
-<p>在使用 javac 编译之后，使用 dx 直接运行会报错：</p>
+<p>​<br>在使用 javac 编译之后，使用 dx 直接运行会报错：</p>
 <pre><code>MiracledeMacBook-Pro:d8 miracle$ ~/Library/Android/sdk/build-tools/28.0.3/dx --dex --output . *.class
 Uncaught translation error: com.android.dx.cf.code.SimException:
 ERROR in Java8.main:([Ljava/lang/String;)V: 
@@ -791,13 +762,6 @@ classes.dex
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/02/AndroidStudio%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="AndroidStudio插件开发（一）">
-      AndroidStudio插件开发（一） <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -809,26 +773,13 @@ classes.dex
 
           </div>
           
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-disqus">disqus</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane disqus" id="comment-disqus">
-              
+    
   <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -891,7 +842,7 @@ classes.dex
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -904,7 +855,7 @@ classes.dex
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1028,35 +979,6 @@ classes.dex
       (d.head || d.body).appendChild(s);
     }
   });
-</script>
-
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'TfAJWXLDbgQDlEdmwt5PU8le-gzGzoHsz',
-      appKey     : 'vNnXRO1eboDIEHXrzCvFKaF5',
-      placeholder: "Just go go",
-      avatar     : 'mm',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : false,
-      lang       : '' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : false,
-      serverURLs : ''
-    });
-  }, window.Valine);
-});
 </script>
 
 </body>
