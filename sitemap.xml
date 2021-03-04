@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huangxshuo.github.io/2021/03/04/apply%20plugin%E5%92%8Cplugins%E4%B8%A4%E7%A7%8D%E5%BA%94%E7%94%A8gradle%E6%8F%92%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
+    
+    <lastmod>2021-03-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huangxshuo.github.io/google568088ee1b2a8495.html</loc>
     
     <lastmod>2021-03-03</lastmod>
@@ -46,7 +53,7 @@
 
   <url>
     <loc>https://huangxshuo.github.io/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -54,28 +61,28 @@
   
   <url>
     <loc>https://huangxshuo.github.io/tags/AS%E6%8F%92%E4%BB%B6/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huangxshuo.github.io/tags/Lambda/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huangxshuo.github.io/tags/JVM/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huangxshuo.github.io/tags/Android/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -84,21 +91,21 @@
   
   <url>
     <loc>https://huangxshuo.github.io/categories/AndroidStudio/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huangxshuo.github.io/categories/AndroidStudio/IntellijPlugin/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huangxshuo.github.io/categories/Java/</loc>
-    <lastmod>2021-03-03</lastmod>
+    <lastmod>2021-03-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
