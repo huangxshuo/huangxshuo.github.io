@@ -172,7 +172,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/apply%20plugin%E5%92%8Cplugins%E4%B8%A4%E7%A7%8D%E5%BA%94%E7%94%A8gradle%E6%8F%92%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">plugin和plugins两种应用gradle插件的区别</a>
+            <a href="/2021/03/04/apply%20plugin%E5%92%8Cplugins%E4%B8%A4%E7%A7%8D%E5%BA%94%E7%94%A8gradle%E6%8F%92%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">apply plugin和plugins两种应用gradle插件的区别</a>
         </h2>
 
         <div class="post-meta">
@@ -183,7 +183,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-04 11:12:17 / 修改时间：14:08:45" itemprop="dateCreated datePublished" datetime="2021-03-04T11:12:17+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-04 11:12:17 / 修改时间：14:45:47" itemprop="dateCreated datePublished" datetime="2021-03-04T11:12:17+08:00">2021-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gradle/" itemprop="url" rel="index"><span itemprop="name">Gradle</span></a>
+                </span>
             </span>
 
           
@@ -211,33 +220,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="如何应用plugin"><a href="#如何应用plugin" class="headerlink" title="如何应用plugin"></a>如何应用plugin</h3><p>![1](apply plugin和plugins两种应用gradle插件的区别/1.jpg)</p>
-<p>根据<a target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/plugins.html#sec:using_plugins">官方文档</a>，使用plugin分两步：</p>
-<ol>
-<li><strong>解析（Resolve）：</strong> 找到包含给定插件的jar的正确版本，并将其添加到脚本类路径中</li>
-<li><strong>应用（apply）：</strong>即调用plugin，应用插件也分两种  <ul>
-<li>脚本plugin 它的写法是<code>apply from &#39;other.gradle&#39;</code>，</li>
-<li>二进制plugin 执行<code>Plugin.apply(T)</code></li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p><code>other.gradle</code>指文件目录与文件名或Http Url</p>
-</blockquote>
-<h3 id="两种写法"><a href="#两种写法" class="headerlink" title="两种写法"></a>两种写法</h3><h4 id="1-apply-plugin"><a href="#1-apply-plugin" class="headerlink" title="1. apply plugin"></a>1. apply plugin</h4><p>这种是我们相对比较熟悉的老的写法，它的解析和应用是分开的。以<a target="_blank" rel="noopener" href="https://github.com/JakeWharton/butterknife">butterknife</a>为例，一般我们会在Android工程根目录下的build.gradle文件中去引入（解析）这个plugin：  </p>
-<p>![2](apply plugin和plugins两种应用gradle插件的区别/2.jpg)</p>
-<p>然后在子工程的build.gradle文件中去应用它：</p>
-<p>![3](apply plugin和plugins两种应用gradle插件的区别/3.jpg)</p>
-<h4 id="2-plugins"><a href="#2-plugins" class="headerlink" title="2. plugins"></a>2. plugins</h4><p>这种新的写法叫plugins DSL，它的<strong>解析和应用是合并的</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id «plugin id»                                            </span><br><span class="line">    id «plugin id» version «plugin version» [apply «false»]   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于核心plugin，比如<code>com.android.application</code>、<code>java</code>，版本号可以省略：</p>
-<p>![4](apply plugin和plugins两种应用gradle插件的区别/4.jpg)</p>
-<p>而后面的<code>apply</code>加上boolean值用来<strong>控制是否要立即应用该插件</strong>。比如我只想在工程的某个子工程中应用该插件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">  id &quot;xyz&quot; version &quot;1.0.0&quot; apply false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subprojects &#123; subproject -&gt;</span><br><span class="line">    if (subproject.name &#x3D;&#x3D; &quot;subProject&quot;) &#123;</span><br><span class="line">        apply plugin: &#39;xyz&#39;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种情况下在子工程apply的版本号可以省略。</p>
-<p>不过，重点来了！这种写法的前提是<strong>要使用的plugin是核心plugin或者发布在[<a target="_blank" rel="noopener" href="https://plugins.gradle.org/search?page=2">Gradle plugin repository</a>才可以！</strong>也就是说如果你自己写的gradle plugin或者公司的gradle plugin，除非是在插件仓库发布过的，否则只能使用第一种方式。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>apply plugin和plugins是使用插件的两种方式，apply plugin是老的写法，使用相对复杂，但是更灵活。 plugins是比较新的写法，它将解析和应用两个步骤合并了，也是官方比较推荐的写法，缺点是只有核心插件和发布在gradle插件仓库的plugin才能用这种写法。</p>
-
+          <p>你清楚这两种法式的区别吗</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/04/apply%20plugin%E5%92%8Cplugins%E4%B8%A4%E7%A7%8D%E5%BA%94%E7%94%A8gradle%E6%8F%92%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -521,13 +512,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
